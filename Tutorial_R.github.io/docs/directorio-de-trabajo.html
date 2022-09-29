@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 11 Directorio de trabajo | R Tutorial Example</title>
+<meta name="author" content="CONAPO">
+<meta name="description" content="El directorio o carpeta de trabajo es el lugar en nuestra computadora en el que se encuentran los archivos con los que estamos trabajando en R. Este es el lugar donde R buscara archivos para...">
+<meta name="generator" content="bookdown 0.29 with bs4_book()">
+<meta property="og:title" content="Chapter 11 Directorio de trabajo | R Tutorial Example">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://github.com/dvillasanao/R_Tutorial/directorio-de-trabajo.html">
+<meta property="og:description" content="El directorio o carpeta de trabajo es el lugar en nuestra computadora en el que se encuentran los archivos con los que estamos trabajando en R. Este es el lugar donde R buscara archivos para...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 11 Directorio de trabajo | R Tutorial Example">
+<meta name="twitter:description" content="El directorio o carpeta de trabajo es el lugar en nuestra computadora en el que se encuentran los archivos con los que estamos trabajando en R. Este es el lugar donde R buscara archivos para...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">R Tutorial Example</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Introducción</a></li>
+<li><a class="" href="rmarkdown-1.html"><span class="header-section-number">2</span> RMarkdown</a></li>
+<li><a class="" href="chunks.html"><span class="header-section-number">3</span> Chunks</a></li>
+<li><a class="" href="objetos.html"><span class="header-section-number">4</span> Tipos de variables</a></li>
+<li><a class="" href="propiedades-de-los-objetos.html"><span class="header-section-number">5</span> Propiedades de los objetos</a></li>
+<li><a class="" href="coerci%C3%B3n-de-objetos.html"><span class="header-section-number">6</span> Coerción de objetos</a></li>
+<li><a class="" href="tipos-de-datos.html"><span class="header-section-number">7</span> Tipos de datos</a></li>
+<li><a class="" href="funbasicas.html"><span class="header-section-number">8</span> Funciones básicas de R</a></li>
+<li><a class="" href="loops.html"><span class="header-section-number">9</span> Loops</a></li>
+<li><a class="" href="apply-family.html"><span class="header-section-number">10</span> Apply family</a></li>
+<li><a class="active" href="directorio-de-trabajo.html"><span class="header-section-number">11</span> Directorio de trabajo</a></li>
+<li><a class="" href="importar-y-exportar-datos.html"><span class="header-section-number">12</span> Importar y exportar datos</a></li>
+<li><a class="" href="dplyr-data-manipulation.html"><span class="header-section-number">13</span> Dplyr (Data Manipulation)</a></li>
+<li><a class="" href="ggplot.html"><span class="header-section-number">14</span> ggplot</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rstudio/bookdown-demo">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="directorio-de-trabajo" class="section level1" number="11">
+<h1>
+<span class="header-section-number">11</span> Directorio de trabajo<a class="anchor" aria-label="anchor" href="#directorio-de-trabajo"><i class="fas fa-link"></i></a>
+</h1>
+<p>El directorio o carpeta de trabajo es el lugar en nuestra computadora en el que se encuentran los archivos con los que estamos trabajando en R. Este es el lugar donde R buscara archivos para importarlos y al que serán exportados, a menos que indiquemos otra cosa.</p>
+<p>Se puede encontrar cuál es el directorio de trabajo con la función <code><a href="https://rdrr.io/r/base/getwd.html">getwd()</a></code>. Sólo tienes que escribir la función en la consola y ejecutarla.</p>
+<div class="sourceCode" id="cb234"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html">getwd</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Se mostrará en la consola la ruta del directorio que se está usando R.</p>
+<p>Se puede cambiar el directorio de trabajo usando la función <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code>, dando como argumento la ruta del directorio que quieres usar.</p>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="directorio-de-trabajo.html#cb235-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"C:\otro_directorio"</span>)</span></code></pre></div>
+<p><strong>Nota.-</strong> Cuando se esta trabajando con un proyecto R con subcarpetas anidadas, de modo que los archivos <code>.Rproj</code> y <code>.Rmd</code> están ubicados en carpetas diferentes, se pueden usar el comando <code><a href="https://rprojroot.r-lib.org/reference/find_root_file.html">rprojroot::find_rstudio_root_file()</a></code> para buscar y establecer el directorio de trabajo en la carpeta principal del proyecto durante la creación de knits (en lugar de la carpeta que contiene el archivo de código RMarkdown).</p>
+<p>Entonces, como mínimo, se usa lo siguiente:</p>
+<div class="sourceCode" id="cb236"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_knit.html">opts_knit</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>root.dir <span class="op">=</span>  <span class="st">"C:/otro_directorio"</span><span class="op">)</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_knit.html">opts_knit</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>root.dir <span class="op">=</span> <span class="fu">rprojroot</span><span class="fu">::</span><span class="fu"><a href="https://rprojroot.r-lib.org/reference/find_root_file.html">find_rstudio_root_file</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_knit.html">opts_knit</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>root.dir <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Este commando debe ir siempre al inicio del <code>setup chunk</code> de los archivos RMarkdown para reposicionar el directorio de trabajo.</p>
+<p>También</p>
+<p>Por último, si deseas conocer el contenido de tu directorio de trabajo, se puede ejecutar. la función <code><a href="https://rdrr.io/r/base/list.files.html">list.files()</a></code>, sin argumentos, que devolverá una lista con el nombre de los archivos de tu directorio de trabajo. La función <code><a href="https://rdrr.io/r/base/list.files.html">list.dirs()</a></code>, también sin argumentos` dará una lista de los directorios dentro del directorio de trabajo.</p>
+<div class="sourceCode" id="cb237"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Ver archivos</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co"># Ver directorios</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.dirs</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div id="sesión" class="section level3" number="11.0.1">
+<h3>
+<span class="header-section-number">11.0.1</span> Sesión<a class="anchor" aria-label="anchor" href="#sesi%C3%B3n"><i class="fas fa-link"></i></a>
+</h3>
+<p>Los objetos y funciones de R son almacenados en la memoria <code>RAM</code> de nuestra computadora.</p>
+<p>Cuando ejecutamos R, ya sea directamente o a través de RStudio, estamos creando una instancia del entorno del entorno computacional de este lenguaje de programación. <strong>cada instancia es una sesión</strong>.</p>
+<p>Todos los objetos y funciones creadas en una sesión, permanecen sólo en ella, no son compartidos entre sesiones, sin embargo una sesión puede tener el mismo directorio de trabajo que otra sesión. Es posible tener más de una sesión de R activa en la misma computadora.</p>
+<p>Cuando cerramos R, también cerramos nuestra sesión. Se nos preguntará si deseamos guardar el contenido de nuestra sesión para poder volver a ella después. Esto se guarda en un archivo con extensión **.Rdata* en el directorio de trabajo.</p>
+<p>Para conocer los objetos y funciones que contiene nuestra sesión, usamos la función <code><a href="https://rdrr.io/r/base/ls.html">ls()</a></code>, que nos devolverá una lista con los nombres de todo lo guardado en la sesión.</p>
+<div class="sourceCode" id="cb238"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##  [1] "a"                  "age"                "angulos"            "ans"                "b"                 
+##  [6] "bcancer"            "chic.f"             "chicago"            "comic_fav"          "conteo"            
+## [11] "deporte"            "df"                 "dt1"                "dt2"                "edad"              
+## [16] "factor_cinco"       "hext"               "historial"          "hlab"               "i"                 
+## [21] "iris_csv"           "iris_excel"         "iris_txt"           "List"               "lista_recursiva"   
+## [26] "matriz"             "matriz_t"           "matriz2"            "mi_df"              "mi_lista"          
+## [31] "mi_lista_importado" "mi_matriz"          "mi_vector"          "mi_vector_1"        "mi_vector_2"       
+## [36] "mi_vector_3"        "mi_vector_mezcla"   "mi_vector_nuevo"    "miarray"            "milista"           
+## [41] "mimarco"            "mimatriz"           "mivector"           "my.function"        "my_fun"            
+## [46] "my_list"            "myvec"              "n"                  "new.function"       "nombres"           
+## [51] "notas"              "nrep"               "num.caras"          "num.lanza"          "out"               
+## [56] "pais"               "qq"                 "quint"              "res"                "resultados"        
+## [61] "sal"                "salext"             "subset"             "trees_excel"        "url"               
+## [66] "value"              "vec"                "vector_1"           "vector_2"           "vector_3"          
+## [71] "vector_4"           "x"                  "y"                  "years"</code></pre>
+<p>De manera más precisa, la sesión es un <strong>entorno</strong> de trabajo y los objetos pertenecen a un entorno específico. Los entornos son un concepto importante al hablar de lenguajes de programación.</p>
+<p>Con que recuerdes que <strong>cada sesión de R tiene su propio entorno global</strong>, eso será suficiente.</p>
+</div>
+<div id="paquetes" class="section level2" number="11.1">
+<h2>
+<span class="header-section-number">11.1</span> Paquetes<a class="anchor" aria-label="anchor" href="#paquetes"><i class="fas fa-link"></i></a>
+</h2>
+<p>R puede ser expandido con <strong>paquetes</strong>. Cada paquete es una colección de funciones diseñadas para atender una tarea específica. Por ejemplo, hay paquetes para trabajo visualización geoespacial, análisis psicométricos, minería de datos, interacción con servicios de Internet y muchas otras cosas más.</p>
+<p>Estos paquetes se encuentran alojados en <strong>CRAN</strong>, así que pasan por un control riguroso antes de estar disponibles para su uso generalizado.</p>
+<p>Podemos instalar paquetes usando la función <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code>, dando como argumento el nombre del paquete que deseamos instalar, entre comillas.</p>
+<p>Por ejemplo, para instalar el paquete <strong>readr</strong>, corremos lo siguiente.</p>
+<div class="sourceCode" id="cb240"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"readr"</span><span class="op">)</span></span></code></pre></div>
+<p>Hecho esto, aparecerán algunos mensajes en la consola mostrando el avance de la instalación</p>
+<p>Una vez concluida la instalación de un paquete, podrás usar sus funciones con la función <code><a href="https://rdrr.io/r/base/library.html">library()</a></code>. Sólo tienes que llamar esta función usando como argumento el nombre del paquete que quieres utilizar</p>
+<div class="sourceCode" id="cb241"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readr.tidyverse.org">readr</a></span><span class="op">)</span> </span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://readr.tidyverse.org">readr</a></span><span class="op">)</span></span></code></pre></div>
+<p>Cuando haces esto, R importa las funciones contenidas en el paquete al entorno de trabajo actual.</p>
+<p>Es importante que se tenga en mente que se deben hacer una llamada a <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> cada que se inicien en una sesión en R. Aunque se hayan importado las funciones de un paquete con anterioridad, las sesiones de R se inician “limpias”, sólo con los objetos y funciones de <em>base</em>.</p>
+<p>Este comportamiento es para evitar problemas de compatibilidad y para propiciar buenas prácticas de colaboración.</p>
+<p>Si se importan paquetes automáticamente y se usan sus funciones sin indicar de donde provienen, al compartir nuestro código con otras personas, estas no tendrán la información completa para entender qué estamos haciendo. R, al pedirnos que cada sesión indiquemos qué estamos importando, nos obliga a ser explícito con todo lo que estamos haciendo. Es un poco latoso, pero te acostumbras a ello.</p>
+<p>En caso de escribir en <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code> el nombre de un paquete no disponible en <strong>CRAN</strong>, se nos mostrará una advertencia y no se instalará nada.</p>
+<div class="sourceCode" id="cb242"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"un_paquete_falso"</span><span class="op">)</span></span></code></pre></div>
+<p>Los paquetes que se han en nuestra sesión actual aparecen al llamar <code><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo()</a></code>.</p>
+<div class="sourceCode" id="cb243"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>También se puede ver qué paquetes se tienen ya instalados ejecutando la función <code><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages()</a></code> sin ningún argumento. Una instalación nueva de R tiene pocos paquetes instalados, pero esta lista puede crecer considerablemente con el tiempo.</p>
+</div>
+<div id="scripts" class="section level2" number="11.2">
+<h2>
+<span class="header-section-number">11.2</span> Scripts<a class="anchor" aria-label="anchor" href="#scripts"><i class="fas fa-link"></i></a>
+</h2>
+<p>Los <em>scripts</em> son documentos de texto con la extensión de archivo <strong>.R</strong>, por ejemplo <code>mi_script.R</code>.</p>
+<p>Estos archivos son iguales a cualquier documentos de texto, pero R los puede leer y ejecutar el código que contienen.</p>
+<p>Aunque R permite el uso interactivo, es recomendable que se guarden el código en un archivo .R, de esta manera se puede usarlo después y compartirlo con otras personas. En realidad, en proyectos complejos, es posible que sean necesarios múltiples <em>scripts</em> para distintos fines.</p>
+<p>Se pueden abrir y ejecutar <em>scripts</em> en R usando la función <code><a href="https://rdrr.io/r/base/source.html">source()</a></code>, dándole como argumento la ruta del archivo .R en la computadora, entre comillas.</p>
+<p>Por ejemplo.</p>
+<div class="sourceCode" id="cb244"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="st">"C:/Mis scripts/mi_script.R"</span><span class="op">)</span></span></code></pre></div>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="apply-family.html"><span class="header-section-number">10</span> Apply family</a></div>
+<div class="next"><a href="importar-y-exportar-datos.html"><span class="header-section-number">12</span> Importar y exportar datos</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li>
+<a class="nav-link" href="#directorio-de-trabajo"><span class="header-section-number">11</span> Directorio de trabajo</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#sesi%C3%B3n"><span class="header-section-number">11.0.1</span> Sesión</a></li></ul>
+</li>
+<li><a class="nav-link" href="#paquetes"><span class="header-section-number">11.1</span> Paquetes</a></li>
+<li><a class="nav-link" href="#scripts"><span class="header-section-number">11.2</span> Scripts</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rstudio/bookdown-demo/blob/master/11-Cap11.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rstudio/bookdown-demo/edit/master/11-Cap11.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>R Tutorial Example</strong>" was written by CONAPO. It was last built on 2022-09-29.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

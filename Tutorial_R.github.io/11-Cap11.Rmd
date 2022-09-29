@@ -1,0 +1,129 @@
+# Directorio de trabajo
+
+El directorio o carpeta de trabajo es el lugar en nuestra computadora en el que se encuentran los archivos con los que estamos trabajando en R. Este es el lugar donde R buscara archivos para importarlos y al que serán exportados, a menos que indiquemos otra cosa.   
+
+
+Se puede encontrar cuál es el directorio de trabajo con la función `getwd()`. Sólo tienes que escribir la función en la consola y ejecutarla.  
+
+```{r, echo = TRUE, eval = FALSE}
+getwd()
+```
+
+Se mostrará en la consola la ruta del directorio que se está usando R.  
+
+Se puede cambiar el directorio de trabajo usando la función `setwd()`, dando como argumento la ruta del directorio que quieres usar. 
+
+```{r, echo = TRUE, eval = FALSE}
+setwd("C:\otro_directorio")
+```
+
+**Nota.-** Cuando se esta trabajando con un proyecto R con subcarpetas anidadas, de modo que los archivos `.Rproj` y `.Rmd` están ubicados en carpetas diferentes, se pueden usar el comando `rprojroot::find_rstudio_root_file()` para buscar y establecer el directorio de trabajo en la carpeta principal del proyecto durante la creación de knits (en lugar de la carpeta que contiene el archivo de código RMarkdown).   
+
+Entonces, como mínimo, se usa lo siguiente:
+
+```{r, eval = FALSE}
+knitr::opts_knit$set(root.dir =  "C:/otro_directorio")
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+knitr::opts_knit$set(root.dir = here::here())
+```
+
+Este commando debe ir siempre al inicio del `setup chunk` de los archivos RMarkdown para reposicionar el directorio de trabajo.  
+
+
+También 
+
+Por último, si deseas conocer el contenido de tu directorio de trabajo, se puede ejecutar. la función `list.files()`, sin argumentos, que devolverá una lista con el nombre de los archivos de tu directorio de trabajo. La función `list.dirs()`, también sin argumentos` dará una lista de los directorios dentro del directorio de trabajo.  
+
+```{r, echo=TRUE, eval=FALSE}
+# Ver archivos
+list.files()
+# Ver directorios
+list.dirs()
+```
+
+### Sesión   
+
+Los objetos y funciones de R son almacenados en la memoria `RAM` de nuestra computadora.   
+
+Cuando ejecutamos R, ya sea directamente o a través de RStudio, estamos creando una instancia del entorno del entorno computacional de este lenguaje de programación. **cada instancia es una sesión**.
+
+Todos los objetos y funciones creadas en una sesión, permanecen sólo en ella, no son compartidos entre sesiones, sin embargo una sesión puede tener el mismo directorio de trabajo que otra sesión. Es posible tener más de una sesión de R activa en la misma computadora.
+
+Cuando cerramos R, también cerramos nuestra sesión. Se nos preguntará si deseamos guardar el contenido de nuestra sesión para poder volver a ella después. Esto se guarda en un archivo con extensión **.Rdata* en el directorio de trabajo.     
+
+Para conocer los objetos y funciones que contiene nuestra sesión, usamos la función `ls()`, que nos devolverá una lista con los nombres de todo lo guardado en la sesión.  
+
+```{r, echo = TRUE, EVAL=FALSE}
+ls()
+```
+
+De manera más precisa, la sesión es un **entorno** de trabajo y los objetos pertenecen a un entorno específico. Los entornos son un concepto importante al hablar de lenguajes de programación.   
+
+Con que recuerdes que **cada sesión de R tiene su propio entorno global**, eso será suficiente.
+
+## Paquetes   
+
+R puede ser expandido con **paquetes**. Cada paquete es una colección de funciones diseñadas para atender una tarea específica. Por ejemplo, hay paquetes para trabajo visualización geoespacial, análisis psicométricos, minería de datos, interacción con servicios de Internet y muchas otras cosas más.     
+
+Estos paquetes se encuentran alojados en **CRAN**, así que pasan por un control riguroso antes de estar disponibles para su uso generalizado.
+
+Podemos instalar paquetes usando la función `install.packages()`, dando como argumento el nombre del paquete que deseamos instalar, entre comillas.  
+
+Por ejemplo, para instalar el paquete **readr**, corremos lo siguiente. 
+
+```{r, echo=TRUE, eval=FALSE}
+install.packages("readr")
+```
+
+Hecho esto, aparecerán algunos mensajes en la consola mostrando el avance de la instalación
+
+Una vez concluida la instalación de un paquete, podrás usar sus funciones con la función `library()`. Sólo tienes que llamar esta función usando como argumento el nombre del paquete que quieres utilizar 
+
+```{r,echo=TRUE, eval=FALSE}
+library(readr) 
+require(readr)
+```
+
+Cuando haces esto, R importa las funciones contenidas en el paquete al entorno de trabajo actual.   
+
+Es importante que se tenga en mente que se deben hacer una llamada a  `library()` cada que se inicien en una sesión en R. Aunque se hayan importado las funciones de un paquete con anterioridad, las sesiones de R se inician "limpias", sólo con los objetos y funciones de *base*.  
+
+Este comportamiento es para evitar problemas de compatibilidad y  para propiciar buenas prácticas de colaboración.     
+
+Si se importan paquetes automáticamente y se usan sus funciones sin indicar de donde provienen, al compartir nuestro código con otras personas, estas no tendrán la información completa para entender qué estamos haciendo. R, al pedirnos que cada sesión indiquemos qué estamos importando, nos obliga a ser explícito con todo lo que estamos haciendo. Es un poco latoso, pero te acostumbras a ello.  
+
+
+En caso de escribir en `install.packages()` el nombre de un paquete no disponible en **CRAN**, se nos mostrará una advertencia y no se instalará nada. 
+
+```{r, echo=TRUE, eval=FALSE}
+install.packages("un_paquete_falso")
+```
+
+Los paquetes que se han en nuestra sesión actual aparecen al llamar `sessionInfo()`.
+
+```{r, eval = FALSE}
+sessionInfo()
+```
+
+
+También se puede ver qué paquetes se tienen ya instalados ejecutando la función `installed.packages()` sin ningún argumento. Una instalación nueva de R tiene pocos paquetes instalados, pero esta lista puede crecer considerablemente con el tiempo.
+
+## Scripts   
+
+Los *scripts* son documentos de texto con la extensión de archivo **.R**, por ejemplo `mi_script.R`.
+
+Estos archivos son iguales a cualquier documentos de texto, pero R los puede leer y ejecutar el código que contienen.   
+
+
+Aunque R permite el uso interactivo, es recomendable que se guarden el código en un archivo .R, de esta manera se puede usarlo después y compartirlo con otras personas. En realidad, en proyectos complejos, es posible que sean necesarios múltiples *scripts* para distintos fines.
+
+Se pueden abrir y ejecutar *scripts* en R usando la función `source()`, dándole como argumento la ruta del archivo .R en la computadora, entre comillas.     
+
+Por ejemplo.
+```{r source, echo=TRUE, eval=FALSE}
+source("C:/Mis scripts/mi_script.R")
+```
+
+
+
+
