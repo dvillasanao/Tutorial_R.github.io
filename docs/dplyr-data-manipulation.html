@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 13 Dplyr (Data Manipulation) | R Tutorial Example</title>
+<meta name="author" content="CONAPO">
+<meta name="description" content="13.1 Data Frames El Data Frames es una estructura de datos clave en estadísticas y en R. La estructura básica de un data.frame es que hay una observación por fila y cada columna que representa una...">
+<meta name="generator" content="bookdown 0.29 with bs4_book()">
+<meta property="og:title" content="Chapter 13 Dplyr (Data Manipulation) | R Tutorial Example">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://github.com/dvillasanao/R_Tutorial/dplyr-data-manipulation.html">
+<meta property="og:description" content="13.1 Data Frames El Data Frames es una estructura de datos clave en estadísticas y en R. La estructura básica de un data.frame es que hay una observación por fila y cada columna que representa una...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 13 Dplyr (Data Manipulation) | R Tutorial Example">
+<meta name="twitter:description" content="13.1 Data Frames El Data Frames es una estructura de datos clave en estadísticas y en R. La estructura básica de un data.frame es que hay una observación por fila y cada columna que representa una...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">R Tutorial Example</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Introducción</a></li>
+<li><a class="" href="rmarkdown-1.html"><span class="header-section-number">2</span> RMarkdown</a></li>
+<li><a class="" href="chunks.html"><span class="header-section-number">3</span> Chunks</a></li>
+<li><a class="" href="objetos.html"><span class="header-section-number">4</span> Tipos de variables</a></li>
+<li><a class="" href="propiedades-de-los-objetos.html"><span class="header-section-number">5</span> Propiedades de los objetos</a></li>
+<li><a class="" href="coerci%C3%B3n-de-objetos.html"><span class="header-section-number">6</span> Coerción de objetos</a></li>
+<li><a class="" href="tipos-de-datos.html"><span class="header-section-number">7</span> Tipos de datos</a></li>
+<li><a class="" href="funbasicas.html"><span class="header-section-number">8</span> Funciones básicas de R</a></li>
+<li><a class="" href="loops.html"><span class="header-section-number">9</span> Loops</a></li>
+<li><a class="" href="apply-family.html"><span class="header-section-number">10</span> Apply family</a></li>
+<li><a class="" href="directorio-de-trabajo.html"><span class="header-section-number">11</span> Directorio de trabajo</a></li>
+<li><a class="" href="importar-y-exportar-datos.html"><span class="header-section-number">12</span> Importar y exportar datos</a></li>
+<li><a class="active" href="dplyr-data-manipulation.html"><span class="header-section-number">13</span> Dplyr (Data Manipulation)</a></li>
+<li><a class="" href="ggplot.html"><span class="header-section-number">14</span> ggplot</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rstudio/bookdown-demo">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="dplyr-data-manipulation" class="section level1" number="13">
+<h1>
+<span class="header-section-number">13</span> Dplyr (Data Manipulation)<a class="anchor" aria-label="anchor" href="#dplyr-data-manipulation"><i class="fas fa-link"></i></a>
+</h1>
+<div id="data-frames-1" class="section level2" number="13.1">
+<h2>
+<span class="header-section-number">13.1</span> Data Frames<a class="anchor" aria-label="anchor" href="#data-frames-1"><i class="fas fa-link"></i></a>
+</h2>
+<p>El <em>Data Frames</em> es una estructura de datos clave en estadísticas y en R. La estructura básica de un data.frame es que hay una observación por fila y cada columna que representa una variable, una medida, característica o característica de esa observación. R tiene una implementación interna de tramas de datos que probablemente sea la que usará con más frecuencia. Sin embargo, hay paquetes en CRAN que implementan data frames a través de cosas como bases de datos relacionales que le permiten operar en data frames muy grandes.</p>
+<p>Dada la importancia de administrar data frames, es importante que se tengan buenas herramientas para manejarlos. En capítulos anteriores ya se ha discutido algunas herramientas como la función <code><a href="https://rdrr.io/r/base/subset.html">subset()</a></code> y el uso de operadores <code>[</code> y <code>$</code> para extraer subconjuntos de data frames. Sin embargo, otras operaciones, como filtrar, reordenar y colapsar, a menudo pueden ser operaciones tediosas en R cuya sintaxis no es muy intuitiva. El paquete <code>dplyr</code> está diseñado para mitigar muchos de estos problemas y proporcionar un conjunto de rutinas altamente optimizado específicamente para tratar con tramas de datos.</p>
+</div>
+<div id="el-paquete-dplyr" class="section level2" number="13.2">
+<h2>
+<span class="header-section-number">13.2</span> El paquete <code>dplyr</code><a class="anchor" aria-label="anchor" href="#el-paquete-dplyr"><i class="fas fa-link"></i></a>
+</h2>
+<p>El paquete <code>dplyr</code> no proporciona ninguna funcionalidad “nueva” a R per se, en el sentido de que todo lo que hace <code>dplyr</code> ya se podría hacer con R base, pero <em>en gran medida</em> simplifica la funcionalidad existente en R.</p>
+<p>Una contribución importante del paquete <code>dplyr</code> es que proporciona una “gramática” (en particular, verbos) para la manipulación de datos y para operar en tramas de datos. Con esta gramática, puede comunicar con <strong>sensatez</strong> qué es lo que está haciendo en un data.frame que otras personas pueden entender (suponiendo que también conozcan la gramática). Esto es útil porque proporciona una abstracción para la manipulación de datos que antes no existía.</p>
+</div>
+<div id="gramática" class="section level2" number="13.3">
+<h2>
+<span class="header-section-number">13.3</span> Gramática<a class="anchor" aria-label="anchor" href="#gram%C3%A1tica"><i class="fas fa-link"></i></a>
+</h2>
+<p>Algunos de los “verbos” clave proporcionados por el paquete <code>dplyr</code> son:</p>
+<ul>
+<li><p><code>select</code> : devuelve un subconjunto de las columnas de un data.frame, usando una notación flexible</p></li>
+<li><p><code>filtro</code> : extrae un subconjunto de filas de un data.frame basado en condiciones lógicas</p></li>
+<li><p><code>arrange</code> : reordenar las filas de un data.frame</p></li>
+<li><p><code>rename</code> : cambia el nombre de las variables en un data.frame</p></li>
+<li><p><code>mutate</code> : agregar nuevas variables/columnas o transformar variables existentes</p></li>
+<li><p><code>summarise</code> / <code>summarize</code> : generar estadísticas resumidas de diferentes variables en el data.frame, posiblemente dentro de los estratos.</p></li>
+<li><p><code>%&gt;%</code> : el operador “tubería” o <code>pipeline</code> se usa para conectar múltiples acciones verbales en un solo código como una tubería.</p></li>
+</ul>
+<p>El paquete <code>dplyr</code> como un número de sus propios tipos de datos que aprovecha. Por ejemplo, hay un práctico método de <code>print</code> que impide imprimir una gran cantidad de datos en la consola. La mayoría de las veces, estos tipos de datos adicionales son transparentes para el usuario y no es necesario preocuparse por ellos.</p>
+<div id="propiedades-comunes-de-la-función-dplyr" class="section level3" number="13.3.1">
+<h3>
+<span class="header-section-number">13.3.1</span> Propiedades comunes de la función <code>dplyr</code><a class="anchor" aria-label="anchor" href="#propiedades-comunes-de-la-funci%C3%B3n-dplyr"><i class="fas fa-link"></i></a>
+</h3>
+<p>Todas las funciones que se discutiran tendrán algunas características comunes. En particular:</p>
+<ol style="list-style-type: decimal">
+<li><p>El primer argumento es un data.frame.</p></li>
+<li><p>Los argumentos subsiguientes describen qué hacer con el data.frame especificado en el primer argumento, y puede hacer referencia a las columnas en el data.frame directamente sin usar el operador $ (solo usando los nombres de las columnas).</p></li>
+<li><p>El resultado de retorno de una función es un nuevo data.frame.</p></li>
+<li><p>Los data frames deben estar correctamente formateados y anotados para que todo esto sea útil. En particular, los datos deben estar <a href="http://www.jstatsoft.org/v59/i10/paper">ordenados</a>. En resumen, debe haber una observación por fila y cada columna debe representar un rasgo o característica de esa observación.</p></li>
+</ol>
+</div>
+</div>
+<div id="instalar-el-paquete-dplyr" class="section level2" number="13.4">
+<h2>
+<span class="header-section-number">13.4</span> Instalar el paquete <code>dplyr</code><a class="anchor" aria-label="anchor" href="#instalar-el-paquete-dplyr"><i class="fas fa-link"></i></a>
+</h2>
+<p>El paquete <code>dplyr</code> se puede instalar desde CRAN o desde GitHub usando el paquete <code>devtools</code> y la función <code>install_github()</code> . El repositorio de GitHub normalmente contendrá las últimas actualizaciones del paquete y la versión de desarrollo.</p>
+<p>Para instalar desde CRAN, simplemente se ejecuta.</p>
+<div class="sourceCode" id="cb292"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">instalar.paquetes</span> <span class="op">(</span> <span class="st">"dplyr"</span> <span class="op">)</span></span></code></pre></div>
+<p>Para instalar desde GitHub puedes ejecutar</p>
+<div class="sourceCode" id="cb293"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"hadley/dplyr "</span><span class="op">)</span></span></code></pre></div>
+<p>Después de instalar el paquete, es importante cargarlo en la sesión de R con la función <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> .</p>
+<div class="sourceCode" id="cb294"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span></code></pre></div>
+<p>Es posible que se reciban algunas advertencias cuando se carga el paquete porque hay funciones en el paquete <code>dplyr</code> que tienen el mismo nombre que funciones en otros paquetes. Por ahora se pueden ignorar las advertencias.</p>
+</div>
+<div id="select" class="section level2" number="13.5">
+<h2>
+<span class="header-section-number">13.5</span> <code>select()</code><a class="anchor" aria-label="anchor" href="#select"><i class="fas fa-link"></i></a>
+</h2>
+<p>Se usarán un conjunto de datos que contiene datos de temperatura y contaminación del aire para la [ciudad de Chicago] (<a href="http://www.biostat.jhsph.edu/~rpeng/leanpub/rprog/chicago_data.zip" class="uri">http://www.biostat.jhsph.edu/~rpeng/leanpub/rprog/chicago_data.zip</a>) en EE. UU. El conjunto de datos está disponible en mi sitio web.</p>
+<p>Después de descomprimir el archivo, puede cargar los datos en R usando la función <code><a href="https://rdrr.io/r/base/readRDS.html">readRDS()</a></code> .</p>
+<div class="sourceCode" id="cb295"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">chicago</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"Bases/chicago.rds"</span><span class="op">)</span></span></code></pre></div>
+<p>Se peden ver algunas características básicas del conjunto de datos con las funciones <code><a href="https://rdrr.io/r/base/dim.html">dim()</a></code> y <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> .</p>
+<div class="sourceCode" id="cb296"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">chicago</span><span class="op">)</span></span>
+<span><span class="co">## [1] 6940    8</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">chicago</span><span class="op">)</span></span>
+<span><span class="co">## 'data.frame':    6940 obs. of  8 variables:</span></span>
+<span><span class="co">##  $ city      : chr  "chic" "chic" "chic" "chic" ...</span></span>
+<span><span class="co">##  $ tmpd      : num  31.5 33 33 29 32 40 34.5 29 26.5 32.5 ...</span></span>
+<span><span class="co">##  $ dptp      : num  31.5 29.9 27.4 28.6 28.9 ...</span></span>
+<span><span class="co">##  $ date      : Date, format: "1987-01-01" "1987-01-02" "1987-01-03" "1987-01-04" ...</span></span>
+<span><span class="co">##  $ pm25tmean2: num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">##  $ pm10tmean2: num  34 NA 34.2 47 NA ...</span></span>
+<span><span class="co">##  $ o3tmean2  : num  4.25 3.3 3.33 4.38 4.75 ...</span></span>
+<span><span class="co">##  $ no2tmean2 : num  20 23.2 23.8 30.4 30.3 ...</span></span></code></pre></div>
+<p>La función <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> se puede usar para <strong>seleccionar columnas de un data.frame</strong> en el que se desea enfocar. A menudo, se tendrá un data.frame que contendrá “muchos datos”, pero cualquier análisis <em>dado</em> solo se puede usar un subconjunto de variables u observaciones. La función <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> permite obtener las pocas columnas que pueda necesitar.</p>
+<p>Supongamos que se quisiera tomar solo las primeras 3 columnas. Hay algunas maneras de hacer esto. Se podría, por ejemplo, utilizar índices numéricos. Pero también se puede usar los nombres directamente.</p>
+<div class="sourceCode" id="cb297"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">chicago</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
+<span><span class="co">## [1] "city" "tmpd" "dptp"</span></span>
+<span></span>
+<span><span class="va">subset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">chicago</span>, <span class="va">city</span><span class="op">:</span><span class="va">dptp</span><span class="op">)</span> </span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">subset</span><span class="op">)</span></span>
+<span><span class="co">##   city tmpd   dptp</span></span>
+<span><span class="co">## 1 chic 31.5 31.500</span></span>
+<span><span class="co">## 2 chic 33.0 29.875</span></span>
+<span><span class="co">## 3 chic 33.0 27.375</span></span>
+<span><span class="co">## 4 chic 29.0 28.625</span></span>
+<span><span class="co">## 5 chic 32.0 28.875</span></span>
+<span><span class="co">## 6 chic 40.0 35.125</span></span>
+<span></span>
+<span><span class="va">subset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">chicago</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">subset</span><span class="op">)</span></span>
+<span><span class="co">##   city tmpd   dptp</span></span>
+<span><span class="co">## 1 chic 31.5 31.500</span></span>
+<span><span class="co">## 2 chic 33.0 29.875</span></span>
+<span><span class="co">## 3 chic 33.0 27.375</span></span>
+<span><span class="co">## 4 chic 29.0 28.625</span></span>
+<span><span class="co">## 5 chic 32.0 28.875</span></span>
+<span><span class="co">## 6 chic 40.0 35.125</span></span></code></pre></div>
+<p>Tenga en cuenta que <code>:</code> normalmente no se puede usar con nombres o cadenas, pero dentro de la función <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> see puede usarla para especificar un rango de nombres de variables.</p>
+<p>También se pueden <em>omitir</em> variables usando la función <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> usando el signo negativo. Con <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> se puede hacer.</p>
+<div class="sourceCode" id="cb298"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">chicago</span>, <span class="op">-</span><span class="op">(</span><span class="va">city</span><span class="op">:</span><span class="va">dptp</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Lo que indica que se deben incluir todas las variables <em>excepto</em> las variables <code>city</code> a <code>dptp</code> . El código equivalente en base R <strong>base</strong> sería:</p>
+<div class="sourceCode" id="cb299"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/match.html">match</a></span><span class="op">(</span><span class="st">"city"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">chicago</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">j</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/match.html">match</a></span><span class="op">(</span><span class="st">"dptp"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">chicago</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">chicago</span><span class="op">[</span>, <span class="op">-</span><span class="op">(</span><span class="va">i</span><span class="op">:</span><span class="va">j</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<p>No es muy relamente intuitivo.</p>
+<p>La función <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> también permite una sintaxis especial que permite especificar nombres de variables basados en patrones. Por ejemplo, si se quisiera mantener todas las variables que terminan en “2”, se podría hacer:</p>
+<div class="sourceCode" id="cb300"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">subset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">chicago</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"2"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">subset</span><span class="op">)</span></span>
+<span><span class="co">## 'data.frame':    6940 obs. of  4 variables:</span></span>
+<span><span class="co">##  $ pm25tmean2: num  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">##  $ pm10tmean2: num  34 NA 34.2 47 NA ...</span></span>
+<span><span class="co">##  $ o3tmean2  : num  4.25 3.3 3.33 4.38 4.75 ...</span></span>
+<span><span class="co">##  $ no2tmean2 : num  20 23.2 23.8 30.4 30.3 ...</span></span></code></pre></div>
+<p>O si se quisiera mantener todas las variables que comienzan con una “d”, podríamos hacer</p>
+<div class="sourceCode" id="cb301"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">subset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">chicago</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"d"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">subset</span><span class="op">)</span></span>
+<span><span class="co">## 'data.frame':    6940 obs. of  2 variables:</span></span>
+<span><span class="co">##  $ dptp: num  31.5 29.9 27.4 28.6 28.9 ...</span></span>
+<span><span class="co">##  $ date: Date, format: "1987-01-01" "1987-01-02" "1987-01-03" "1987-01-04" ...</span></span></code></pre></div>
+<p>También se pueden usar expresiones regulares más generales si es necesario. Consulte la página de ayuda ( <code><a href="https://dplyr.tidyverse.org/reference/select.html">?select</a></code> ) para obtener más detalles.</p>
+</div>
+<div id="filter" class="section level2" number="13.6">
+<h2>
+<span class="header-section-number">13.6</span> <code>filter()</code><a class="anchor" aria-label="anchor" href="#filter"><i class="fas fa-link"></i></a>
+</h2>
+<p>La función <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> se utiliza para extraer subconjuntos de filas de un data.frame. Esta función es similar a la función <code><a href="https://rdrr.io/r/base/subset.html">subset()</a></code> existente en R, pero es un poco más rápida e intuitiva.</p>
+<p>Suponemos que se quisiera extraer las filas del data.frame <code>chicago</code> donde los niveles de PM2.5 son superiores a 30 (que es un nivel razonablemente alto), se podría hacer:</p>
+<div class="sourceCode" id="cb302"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">chic.f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">chicago</span>, <span class="va">pm25tmean2</span> <span class="op">&gt;</span> <span class="fl">30</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">chic.f</span><span class="op">)</span></span>
+<span><span class="co">## 'data.frame':    194 obs. of  8 variables:</span></span>
+<span><span class="co">##  $ city      : chr  "chic" "chic" "chic" "chic" ...</span></span>
+<span><span class="co">##  $ tmpd      : num  23 28 55 59 57 57 75 61 73 78 ...</span></span>
+<span><span class="co">##  $ dptp      : num  21.9 25.8 51.3 53.7 52 56 65.8 59 60.3 67.1 ...</span></span>
+<span><span class="co">##  $ date      : Date, format: "1998-01-17" "1998-01-23" "1998-04-30" "1998-05-01" ...</span></span>
+<span><span class="co">##  $ pm25tmean2: num  38.1 34 39.4 35.4 33.3 ...</span></span>
+<span><span class="co">##  $ pm10tmean2: num  32.5 38.7 34 28.5 35 ...</span></span>
+<span><span class="co">##  $ o3tmean2  : num  3.18 1.75 10.79 14.3 20.66 ...</span></span>
+<span><span class="co">##  $ no2tmean2 : num  25.3 29.4 25.3 31.4 26.8 ...</span></span></code></pre></div>
+<p>Se puede ver que ahora solo hay filas 194 en el data.frame y la distribución de los valores <code>pm25tmean2</code> es.</p>
+<div class="sourceCode" id="cb303"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">chic.f</span><span class="op">$</span><span class="va">pm25tmean2</span><span class="op">)</span></span>
+<span><span class="co">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
+<span><span class="co">##   30.05   32.12   35.04   36.63   39.53   61.50</span></span></code></pre></div>
+<p>Se puede colocar una secuencia lógica arbitrariamente compleja dentro de <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> , por lo que se podría extraer las filas donde PM2.5 es superior a 30 <em>y</em> la temperatura es superior a 80 grados Fahrenheit.</p>
+<div class="sourceCode" id="cb304"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">chic.f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">chicago</span>, <span class="va">pm25tmean2</span> <span class="op">&gt;</span> <span class="fl">30</span> <span class="op">&amp;</span> <span class="va">tmpd</span> <span class="op">&gt;</span> <span class="fl">80</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">chic.f</span>, <span class="va">date</span>, <span class="va">tmpd</span>, <span class="va">pm25tmean2</span><span class="op">)</span></span>
+<span><span class="co">##          date tmpd pm25tmean2</span></span>
+<span><span class="co">## 1  1998-08-23   81   39.60000</span></span>
+<span><span class="co">## 2  1998-09-06   81   31.50000</span></span>
+<span><span class="co">## 3  2001-07-20   82   32.30000</span></span>
+<span><span class="co">## 4  2001-08-01   84   43.70000</span></span>
+<span><span class="co">## 5  2001-08-08   85   38.83750</span></span>
+<span><span class="co">## 6  2001-08-09   84   38.20000</span></span>
+<span><span class="co">## 7  2002-06-20   82   33.00000</span></span>
+<span><span class="co">## 8  2002-06-23   82   42.50000</span></span>
+<span><span class="co">## 9  2002-07-08   81   33.10000</span></span>
+<span><span class="co">## 10 2002-07-18   82   38.85000</span></span>
+<span><span class="co">## 11 2003-06-25   82   33.90000</span></span>
+<span><span class="co">## 12 2003-07-04   84   32.90000</span></span>
+<span><span class="co">## 13 2005-06-24   86   31.85714</span></span>
+<span><span class="co">## 14 2005-06-27   82   51.53750</span></span>
+<span><span class="co">## 15 2005-06-28   85   31.20000</span></span>
+<span><span class="co">## 16 2005-07-17   84   32.70000</span></span>
+<span><span class="co">## 17 2005-08-03   84   37.90000</span></span></code></pre></div>
+<p>Ahora solo hay observaciones 17 donde se cumplen ambas condiciones.</p>
+</div>
+<div id="arrange" class="section level2" number="13.7">
+<h2>
+<span class="header-section-number">13.7</span> <code>arrange()</code><a class="anchor" aria-label="anchor" href="#arrange"><i class="fas fa-link"></i></a>
+</h2>
+<p>La función <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> se usa para reordenar las filas de un data.frame de acuerdo con una de las variables/columnas. Reordenar filas de un data.frame (manteniendo el orden correspondiente de otras columnas) normalmente es una molestia en R. La función <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> simplifica bastante el proceso.</p>
+<p>Aquí se puede ordenar las filas del data.frame por fecha, de modo que la primera fila sea la observación más antigua (la más antigua) y la última fila sea la observación más reciente (la más reciente).</p>
+<div class="sourceCode" id="cb305"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">chicago</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">chicago</span>, <span class="va">date</span><span class="op">)</span></span></code></pre></div>
+<p>Ahora se puedne comprobar las primeras filas</p>
+<div class="sourceCode" id="cb306"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">chicago</span>, <span class="va">date</span>, <span class="va">pm25tmean2</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##         date pm25tmean2
+## 1 1987-01-01         NA
+## 2 1987-01-02         NA
+## 3 1987-01-03         NA</code></pre>
+<p>y las últimas filas.</p>
+<div class="sourceCode" id="cb308"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">chicago</span>, <span class="va">date</span>, <span class="va">pm25tmean2</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##            date pm25tmean2
+## 6938 2005-12-29    7.45000
+## 6939 2005-12-30   15.05714
+## 6940 2005-12-31   15.00000</code></pre>
+<p>Las columnas también se pueden organizar en orden descendente mediante el uso del operador especial <code><a href="https://dplyr.tidyverse.org/reference/desc.html">desc()</a></code> .</p>
+<div class="sourceCode" id="cb310"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">chicago</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">chicago</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Mirando las primeras tres y últimas tres filas se muestran las fechas en orden descendente.</p>
+<div class="sourceCode" id="cb311"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">chicago</span>, <span class="va">date</span>, <span class="va">pm25tmean2</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">##         date pm25tmean2</span></span>
+<span><span class="co">## 1 2005-12-31   15.00000</span></span>
+<span><span class="co">## 2 2005-12-30   15.05714</span></span>
+<span><span class="co">## 3 2005-12-29    7.45000</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">chicago</span>, <span class="va">date</span>, <span class="va">pm25tmean2</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">##            date pm25tmean2</span></span>
+<span><span class="co">## 6938 1987-01-03         NA</span></span>
+<span><span class="co">## 6939 1987-01-02         NA</span></span>
+<span><span class="co">## 6940 1987-01-01         NA</span></span></code></pre></div>
+</div>
+<div id="rename" class="section level2" number="13.8">
+<h2>
+<span class="header-section-number">13.8</span> <code>rename()</code><a class="anchor" aria-label="anchor" href="#rename"><i class="fas fa-link"></i></a>
+</h2>
+<p>Cambiar el nombre de una variable en un data.frame en R es sorprendentemente difícil de hacer. La función <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> está diseñada para facilitar este proceso.</p>
+<p>Aquí se pueden ver los nombres de las primeras cinco variables en el data.frame <code>chicago</code> .</p>
+<div class="sourceCode" id="cb312"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">chicago</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">##   city tmpd dptp       date pm25tmean2</span></span>
+<span><span class="co">## 1 chic   35 30.1 2005-12-31   15.00000</span></span>
+<span><span class="co">## 2 chic   36 31.0 2005-12-30   15.05714</span></span>
+<span><span class="co">## 3 chic   35 29.4 2005-12-29    7.45000</span></span></code></pre></div>
+<p>Se supone que la columna <code>dptp</code> representa la temperatura del punto de rocío y la columna <code>pm25tmean2</code> proporciona los datos de PM2.5. Sin embargo, estos nombres son bastante oscuros o incómodos y probablemente se les cambie el nombre a algo más sensato.</p>
+<div class="sourceCode" id="cb313"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">chicago</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span><span class="va">chicago</span>, dewpoint <span class="op">=</span> <span class="va">dptp</span>,</span>
+<span>                  pm25 <span class="op">=</span> <span class="va">pm25tmean2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">chicago</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">##   city tmpd dewpoint       date     pm25</span></span>
+<span><span class="co">## 1 chic   35     30.1 2005-12-31 15.00000</span></span>
+<span><span class="co">## 2 chic   36     31.0 2005-12-30 15.05714</span></span>
+<span><span class="co">## 3 chic   35     29.4 2005-12-29  7.45000</span></span></code></pre></div>
+<p>La sintaxis dentro de la función <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> es tener el nuevo nombre en el lado izquierdo del signo <code>=</code> y el nombre anterior en el lado derecho.</p>
+<p>Lo dejo como ejercicio para que el lector descubra cómo hacer esto en base R sin <code>dplyr</code> .</p>
+</div>
+<div id="mutate" class="section level2" number="13.9">
+<h2>
+<span class="header-section-number">13.9</span> <code>mutate()</code><a class="anchor" aria-label="anchor" href="#mutate"><i class="fas fa-link"></i></a>
+</h2>
+<p>La función <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> existe para calcular transformaciones de variables en un data.frame. A menudo, desea crear nuevas variables derivadas de variables existentes y <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> proporciona una interfaz limpia para hacerlo.</p>
+<p>Por ejemplo, con los datos de contaminación del aire, a menudo se desea <em>eliminar la tendencia</em> de los datos restando la media de los datos. De esa manera, se puede ver si el nivel de contaminación del aire de un día determinado es mayor o menor que el promedio (en lugar de ver su nivel absoluto).</p>
+<p>Se crea una variable <code>pm25detrend</code> que resta la media de la variable <code>pm25</code>.</p>
+<div class="sourceCode" id="cb314"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">chicago</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">chicago</span>, pm25detrend <span class="op">=</span> <span class="va">pm25</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">pm25</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">chicago</span><span class="op">)</span></span>
+<span><span class="co">##   city tmpd dewpoint       date     pm25 pm10tmean2  o3tmean2 no2tmean2 pm25detrend</span></span>
+<span><span class="co">## 1 chic   35     30.1 2005-12-31 15.00000       23.5  2.531250  13.25000   -1.230958</span></span>
+<span><span class="co">## 2 chic   36     31.0 2005-12-30 15.05714       19.2  3.034420  22.80556   -1.173815</span></span>
+<span><span class="co">## 3 chic   35     29.4 2005-12-29  7.45000       23.5  6.794837  19.97222   -8.780958</span></span>
+<span><span class="co">## 4 chic   37     34.5 2005-12-28 17.75000       27.5  3.260417  19.28563    1.519042</span></span>
+<span><span class="co">## 5 chic   40     33.6 2005-12-27 23.56000       27.0  4.468750  23.50000    7.329042</span></span>
+<span><span class="co">## 6 chic   35     29.6 2005-12-26  8.40000        8.5 14.041667  16.81944   -7.830958</span></span></code></pre></div>
+<p>También está la función <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute()</a></code> relacionada , que hace lo mismo que <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> pero luego <em>elimina todas las variables no transformadas</em> .</p>
+<p>Aquí se elimina la tendencia de las variables PM10 y ozono (O3).</p>
+<div class="sourceCode" id="cb315"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute</a></span><span class="op">(</span><span class="va">chicago</span>, </span>
+<span>               pm10detrend <span class="op">=</span> <span class="va">pm10tmean2</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">pm10tmean2</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>               o3detrend <span class="op">=</span> <span class="va">o3tmean2</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">o3tmean2</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">##   pm10detrend  o3detrend</span></span>
+<span><span class="co">## 1  -10.395206 -16.904263</span></span>
+<span><span class="co">## 2  -14.695206 -16.401093</span></span>
+<span><span class="co">## 3  -10.395206 -12.640676</span></span>
+<span><span class="co">## 4   -6.395206 -16.175096</span></span>
+<span><span class="co">## 5   -6.895206 -14.966763</span></span>
+<span><span class="co">## 6  -25.395206  -5.393846</span></span></code></pre></div>
+<p>Teniendo en cuenta que solo hay dos columnas en el data.frame transmutado.</p>
+</div>
+<div id="group_by" class="section level2" number="13.10">
+<h2>
+<span class="header-section-number">13.10</span> <code>group_by()</code><a class="anchor" aria-label="anchor" href="#group_by"><i class="fas fa-link"></i></a>
+</h2>
+<p>La función <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> se utiliza para generar estadísticas de resumen a partir del data.frame dentro de los estratos definidos por una variable. Por ejemplo, en este conjunto de datos de contaminación del aire, es posible que se desee saber cuál es el nivel promedio anual de <code>PM2.5</code>. Así que el estrato es el año, y eso es algo que se puede derivar de la variable <code>date</code> . Junto con la función <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> ,a menudo se usa la función <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>.</p>
+<p>La operación general aquí es una combinación de dividir un data.frame en partes separadas definidas por una variable o grupo de variables por <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>, y luego aplicar una función de resumen a través de esos subconjuntos, utilizando la función <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code>.</p>
+<p>Primero, se puede crear una variable <code>year</code> usando <code><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXlt()</a></code> .</p>
+<div class="sourceCode" id="cb316"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">chicago</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">chicago</span>, year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXlt</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">$</span><span class="va">year</span> <span class="op">+</span> <span class="fl">1900</span><span class="op">)</span></span></code></pre></div>
+<p>Ahora se puede crear un data.frame separado que divida el data.frame original por año.</p>
+<div class="sourceCode" id="cb317"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">years</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">chicago</span>, <span class="va">year</span><span class="op">)</span></span></code></pre></div>
+<p>Finalmente, se calculan las estadísticas resumidas para cada año en el data.frame con la función <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> .</p>
+<div class="sourceCode" id="cb318"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span><span class="va">years</span>, </span>
+<span>           pm25 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">pm25</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span>
+<span>           o3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">o3tmean2</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span>
+<span>           no2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">no2tmean2</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>           .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 19 × 4
+##     year  pm25    o3   no2
+##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1  1987 NaN    63.0  23.5
+##  2  1988 NaN    61.7  24.5
+##  3  1989 NaN    59.7  26.1
+##  4  1990 NaN    52.2  22.6
+##  5  1991 NaN    63.1  21.4
+##  6  1992 NaN    50.8  24.8
+##  7  1993 NaN    44.3  25.8
+##  8  1994 NaN    52.2  28.5
+##  9  1995 NaN    66.6  27.3
+## 10  1996 NaN    58.4  26.4
+## 11  1997 NaN    56.5  25.5
+## 12  1998  18.3  50.7  24.6
+## 13  1999  18.5  57.5  24.7
+## 14  2000  16.9  55.8  23.5
+## 15  2001  16.9  51.8  25.1
+## 16  2002  15.3  54.9  22.7
+## 17  2003  15.2  56.2  24.6
+## 18  2004  14.6  44.5  23.4
+## 19  2005  16.2  58.8  22.6</code></pre>
+<p><code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> devuelve un data.frame con <code>año</code> como la primera columna, y luego los promedios anuales de <code>pm25</code> , <code>o3</code> y <code>no2</code> .</p>
+<p>En un ejemplo un poco más complicado, se podría querer saber cuáles son los niveles promedio de ozono ( <code>o3</code> ) y dióxido de nitrógeno ( <code>no2</code> ) dentro de los quintiles de <code>pm25</code> . Una forma más ingeniosa de hacer esto sería a través de un modelo de regresión, pero en realidad se puede hacerlo rápidamente con <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> y <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> .</p>
+<p>Primero, se puede crear una variable categórica de <code>pm25</code> dividida en quintiles.</p>
+<div class="sourceCode" id="cb320"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">qq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">chicago</span><span class="op">$</span><span class="va">pm25</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0.2</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">chicago</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">chicago</span>, pm25.quint <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">pm25</span>, <span class="va">qq</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Ahora se puede agrupar el data.frame por la variable <code>pm25.quint</code>.</p>
+<div class="sourceCode" id="cb321"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">quint</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">chicago</span>, <span class="va">pm25.quint</span><span class="op">)</span></span></code></pre></div>
+<p>Finalmente, se puede calcular la media de <code>o3</code> y <code>no2</code> dentro de los quintiles de <code>pm25</code> .</p>
+<div class="sourceCode" id="cb322"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span><span class="va">quint</span>, o3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">o3tmean2</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span>
+<span>          no2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">no2tmean2</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>          .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 6 × 3
+##   pm25.quint     o3   no2
+##   &lt;fct&gt;       &lt;dbl&gt; &lt;dbl&gt;
+## 1 (1.7,8.7]    21.7  18.0
+## 2 (8.7,12.4]   20.4  22.1
+## 3 (12.4,16.7]  20.7  24.4
+## 4 (16.7,22.6]  19.9  27.3
+## 5 (22.6,61.5]  20.3  29.6
+## 6 &lt;NA&gt;         18.8  25.8</code></pre>
+<p>De la tabla, parece que no hay una fuerte relación entre <code>pm25</code> y <code>o3</code> , pero parece haber una correlación positiva entre <code>pm25</code> y <code>no2</code> . Los modelos estadísticos más sofisticados pueden ayudar a proporcionar respuestas precisas a estas preguntas, pero una simple aplicación de las funciones <code>dplyr</code> a menudo puede ayudarlo a llegar hasta allí.</p>
+</div>
+<div id="section" class="section level2" number="13.11">
+<h2>
+<span class="header-section-number">13.11</span> <code>%&gt;%</code><a class="anchor" aria-label="anchor" href="#section"><i class="fas fa-link"></i></a>
+</h2>
+<p>El operador de canalización <code>%&gt;%</code> es muy útil para encadenar varias funciones <code>dplyr</code> en una secuencia de operaciones. Notesé que arriba que cada vez que queríamos aplicar más de una función, la secuencia queda enterrada en una secuencia de llamadas a funciones anidadas que es difícil de leer, es decir.</p>
+<div class="sourceCode" id="cb324"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">third</span><span class="op">(</span><span class="fu">second</span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html">first</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Este anidamiento no es una forma natural de pensar en una secuencia de operaciones. El operador <code>%&gt;%</code> permite encadenar operaciones de izquierda a derecha, es decir</p>
+<div class="sourceCode" id="cb325"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html">first</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">second</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">third</span></span></code></pre></div>
+<p>Tomando el ejemplo anterior donde se calculó la media de <code>o3</code> y <code>no2</code> dentro de los quintiles de <code>pm25</code>. Se tuvo que:</p>
+<ol style="list-style-type: decimal">
+<li>crea una nueva variable <code>pm25.quint</code>
+</li>
+<li>dividir el data.frame por esa nueva variable.</li>
+<li>calcular la media de <code>o3</code> y <code>no2</code> en los subgrupos definidos por <code>pm25.quint</code>.</li>
+</ol>
+<p>Eso se puede hacer con la siguiente secuencia en una sola expresión R.</p>
+<div class="sourceCode" id="cb326"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">chicago</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>, pm25.quint <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">pm25</span>, <span class="va">qq</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>    </span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">pm25.quint</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>o3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">o3tmean2</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span>
+<span>               no2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">no2tmean2</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>                .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 6 × 3
+##   pm25.quint     o3   no2
+##   &lt;fct&gt;       &lt;dbl&gt; &lt;dbl&gt;
+## 1 (1.7,8.7]    21.7  18.0
+## 2 (8.7,12.4]   20.4  22.1
+## 3 (12.4,16.7]  20.7  24.4
+## 4 (16.7,22.6]  19.9  27.3
+## 5 (22.6,61.5]  20.3  29.6
+## 6 &lt;NA&gt;         18.8  25.8</code></pre>
+<p>De esta manera, no se tiene que crear un conjunto de variables temporales en el camino o crear una secuencia anidada masiva de llamadas a funciones.</p>
+<p>Observesé en el código anterior que paso el data.frame <code>chicago</code> a la primera llamada y después se uso <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>, pero luego no se tuvo que pasar el primer argumento a <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> o <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> . Una vez que se viaja por la tubería con <code>%&gt;%</code> , el primer argumento se toma como la salida del elemento anterior en la tubería.</p>
+<p>Otro ejemplo podría ser calcular el nivel promedio de contaminantes por mes. Esto podría ser útil para ver si hay tendencias estacionales en los datos.</p>
+<div class="sourceCode" id="cb328"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">chicago</span>, month <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXlt</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">$</span><span class="va">mon</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>pm25 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">pm25</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span>
+<span>                  o3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">o3tmean2</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span>
+<span>                  no2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">no2tmean2</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>                  .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 12 × 4
+##    month  pm25    o3   no2
+##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1     1  17.8  28.2  25.4
+##  2     2  20.4  37.4  26.8
+##  3     3  17.4  39.0  26.8
+##  4     4  13.9  47.9  25.0
+##  5     5  14.1  52.8  24.2
+##  6     6  15.9  66.6  25.0
+##  7     7  16.6  59.5  22.4
+##  8     8  16.9  54.0  23.0
+##  9     9  15.9  57.5  24.5
+## 10    10  14.2  47.1  24.2
+## 11    11  15.2  29.5  23.6
+## 12    12  17.5  27.7  24.5</code></pre>
+<p>Aquí se puede ver que <code>o3</code> tiende a ser bajo en los meses de invierno y alto en verano, mientras que <code>no2</code> es más alto en invierno y más bajo en verano.</p>
+</div>
+<div id="resumen" class="section level2" number="13.12">
+<h2>
+<span class="header-section-number">13.12</span> Resumen<a class="anchor" aria-label="anchor" href="#resumen"><i class="fas fa-link"></i></a>
+</h2>
+<p>El paquete <code>dplyr</code> proporciona un conjunto conciso de operaciones para administrar data frames. Con estas funciones se puede realizar una serie de operaciones complejas en tan solo unas pocas líneas de código. En particular, a menudo se puede realizar los comienzos de un análisis exploratorio con la poderosa combinación de <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> y <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> .</p>
+<p>Una vez que aprende la gramática <code>dplyr</code> , hay algunos beneficios adicionales;</p>
+<ul>
+<li><p><code>dplyr</code> puede funcionar con otros “backends” de data frames, como bases de datos SQL. Hay una interfaz SQL para bases de datos relacionales a través del paquete DBI.</p></li>
+<li><p><code>dplyr</code> se puede integrar con el paquete <code>data.table</code> para tablas grandes y rápidas.</p></li>
+</ul>
+<p>El paquete <code>dplyr</code> es una forma práctica de simplificar y acelerar el código de administración de data frames.</p>
+<ul>
+<li>También existen múltiples paqueterías que permiten la incorporación de dplyr en los modelos estadísticos.</li>
+</ul>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="importar-y-exportar-datos.html"><span class="header-section-number">12</span> Importar y exportar datos</a></div>
+<div class="next"><a href="ggplot.html"><span class="header-section-number">14</span> ggplot</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#dplyr-data-manipulation"><span class="header-section-number">13</span> Dplyr (Data Manipulation)</a></li>
+<li><a class="nav-link" href="#data-frames-1"><span class="header-section-number">13.1</span> Data Frames</a></li>
+<li><a class="nav-link" href="#el-paquete-dplyr"><span class="header-section-number">13.2</span> El paquete dplyr</a></li>
+<li>
+<a class="nav-link" href="#gram%C3%A1tica"><span class="header-section-number">13.3</span> Gramática</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#propiedades-comunes-de-la-funci%C3%B3n-dplyr"><span class="header-section-number">13.3.1</span> Propiedades comunes de la función dplyr</a></li></ul>
+</li>
+<li><a class="nav-link" href="#instalar-el-paquete-dplyr"><span class="header-section-number">13.4</span> Instalar el paquete dplyr</a></li>
+<li><a class="nav-link" href="#select"><span class="header-section-number">13.5</span> select()</a></li>
+<li><a class="nav-link" href="#filter"><span class="header-section-number">13.6</span> filter()</a></li>
+<li><a class="nav-link" href="#arrange"><span class="header-section-number">13.7</span> arrange()</a></li>
+<li><a class="nav-link" href="#rename"><span class="header-section-number">13.8</span> rename()</a></li>
+<li><a class="nav-link" href="#mutate"><span class="header-section-number">13.9</span> mutate()</a></li>
+<li><a class="nav-link" href="#group_by"><span class="header-section-number">13.10</span> group_by()</a></li>
+<li><a class="nav-link" href="#section"><span class="header-section-number">13.11</span> %&gt;%</a></li>
+<li><a class="nav-link" href="#resumen"><span class="header-section-number">13.12</span> Resumen</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rstudio/bookdown-demo/blob/master/13-Cap13.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rstudio/bookdown-demo/edit/master/13-Cap13.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>R Tutorial Example</strong>" was written by CONAPO. It was last built on 2022-09-29.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

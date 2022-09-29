@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 7 Tipos de datos | R Tutorial Example</title>
+<meta name="author" content="CONAPO">
+<meta name="description" content="En R los datos pueden ser de diferentes tipos. Cada tipo tiene características particulares que lo distinguen de los demás. Entre otras cosas algunas operaciones sólo pueden realizarse con tipos...">
+<meta name="generator" content="bookdown 0.29 with bs4_book()">
+<meta property="og:title" content="Chapter 7 Tipos de datos | R Tutorial Example">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://github.com/dvillasanao/R_Tutorial/tipos-de-datos.html">
+<meta property="og:description" content="En R los datos pueden ser de diferentes tipos. Cada tipo tiene características particulares que lo distinguen de los demás. Entre otras cosas algunas operaciones sólo pueden realizarse con tipos...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 7 Tipos de datos | R Tutorial Example">
+<meta name="twitter:description" content="En R los datos pueden ser de diferentes tipos. Cada tipo tiene características particulares que lo distinguen de los demás. Entre otras cosas algunas operaciones sólo pueden realizarse con tipos...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">R Tutorial Example</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Introducción</a></li>
+<li><a class="" href="rmarkdown-1.html"><span class="header-section-number">2</span> RMarkdown</a></li>
+<li><a class="" href="chunks.html"><span class="header-section-number">3</span> Chunks</a></li>
+<li><a class="" href="objetos.html"><span class="header-section-number">4</span> Tipos de variables</a></li>
+<li><a class="" href="propiedades-de-los-objetos.html"><span class="header-section-number">5</span> Propiedades de los objetos</a></li>
+<li><a class="" href="coerci%C3%B3n-de-objetos.html"><span class="header-section-number">6</span> Coerción de objetos</a></li>
+<li><a class="active" href="tipos-de-datos.html"><span class="header-section-number">7</span> Tipos de datos</a></li>
+<li><a class="" href="funbasicas.html"><span class="header-section-number">8</span> Funciones básicas de R</a></li>
+<li><a class="" href="loops.html"><span class="header-section-number">9</span> Loops</a></li>
+<li><a class="" href="apply-family.html"><span class="header-section-number">10</span> Apply family</a></li>
+<li><a class="" href="directorio-de-trabajo.html"><span class="header-section-number">11</span> Directorio de trabajo</a></li>
+<li><a class="" href="importar-y-exportar-datos.html"><span class="header-section-number">12</span> Importar y exportar datos</a></li>
+<li><a class="" href="dplyr-data-manipulation.html"><span class="header-section-number">13</span> Dplyr (Data Manipulation)</a></li>
+<li><a class="" href="ggplot.html"><span class="header-section-number">14</span> ggplot</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rstudio/bookdown-demo">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="tipos-de-datos" class="section level1" number="7">
+<h1>
+<span class="header-section-number">7</span> Tipos de datos<a class="anchor" aria-label="anchor" href="#tipos-de-datos"><i class="fas fa-link"></i></a>
+</h1>
+<p>En R los datos pueden ser de diferentes tipos. Cada tipo tiene características particulares que lo distinguen de los demás. Entre otras cosas algunas operaciones sólo pueden realizarse con tipos de datos específicos</p>
+<p>Es importante revisar el tipo de datos más comunes en R y sus propiedades, así como la coerción entre tipos de datos.</p>
+<div id="datos-más-comunes" class="section level2" number="7.1">
+<h2>
+<span class="header-section-number">7.1</span> Datos más comunes<a class="anchor" aria-label="anchor" href="#datos-m%C3%A1s-comunes"><i class="fas fa-link"></i></a>
+</h2>
+<p>Los tipos de datos de uso más común en R son los siguientes.</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th>Tipo</th>
+<th>Ejemplo</th>
+<th>Nombre en inglés</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Entero</td>
+<td>1</td>
+<td>integer</td>
+</tr>
+<tr class="even">
+<td>Numérico</td>
+<td>1.3</td>
+<td>numeric</td>
+</tr>
+<tr class="odd">
+<td>Cadena de texto</td>
+<td>“uno”</td>
+<td>character</td>
+</tr>
+<tr class="even">
+<td>Factor</td>
+<td>uno</td>
+<td>factor</td>
+</tr>
+<tr class="odd">
+<td>Lógico</td>
+<td>TRUE</td>
+<td>logical</td>
+</tr>
+<tr class="even">
+<td>Perdido</td>
+<td><code>NA</code></td>
+<td>NA</td>
+</tr>
+<tr class="odd">
+<td>Vacío</td>
+<td><code>NULL</code></td>
+<td>null</td>
+</tr>
+</tbody>
+</table></div>
+<p>Además de estos tipos, en R también contamos con datos complejos numéricos complejos (con una parte real y una imaginaria), <strong>raw</strong> (bytes), fechas y <em>raster</em>, entre otros. Estos tipos tiene aplicaciones muy específicas, por ejemplo, los datos de tipo fecha son ampliamente usados en economía, para análisis de series de tiempo.</p>
+<p>Se revisan las principales características de estos tipos de datos.</p>
+</div>
+<div id="entero-y-numérico" class="section level2" number="7.2">
+<h2>
+<span class="header-section-number">7.2</span> Entero y numérico<a class="anchor" aria-label="anchor" href="#entero-y-num%C3%A9rico"><i class="fas fa-link"></i></a>
+</h2>
+<p>Como su nombre lo indica, los <code>datos enteros</code> representan números enteros, sin una parte decimal o fraccionaria, que pueden ser usados en operaciones matemáticas.</p>
+<p>Por su parte, como su nombre lo indica, los <code>datos numéricos</code> representan números, la diferencia de estos con los datos enteros es que tiene una parte decimal o fraccionaria.</p>
+<p>Los datos numéricos también son llamados <em><code>doble</code></em> o <em><code>float</code></em> (flotantes). Este nombre se debe a que, en realidad, son números de doble precisión, pues tienen una parte entera y una fraccionaria decimal, y son llamados <em>float</em> debido a que se usa un punto flotante para su representación computacional. Para fines prácticos, estos términos son sinónimos.</p>
+</div>
+<div id="cadena-de-texto" class="section level2" number="7.3">
+<h2>
+<span class="header-section-number">7.3</span> Cadena de texto<a class="anchor" aria-label="anchor" href="#cadena-de-texto"><i class="fas fa-link"></i></a>
+</h2>
+<p>El tipo <em><code>character</code></em> representa <strong>texto</strong> y es fácil reconocerlo porque un dato siempre esta rodeado de comillas , simples <code>''</code> o dobles <code>""</code>. De manera convencional, nos referimos a este tipo de datos como <em>cadenas de texto</em>, es decir, secuencias de caracteres.</p>
+<p>Este es el tipo de datos más flexible de R, pues una cadena de texto puede contener letras, números, espacios, signos de puntuación y símbolos especiales.</p>
+</div>
+<div id="factor" class="section level2" number="7.4">
+<h2>
+<span class="header-section-number">7.4</span> Factor<a class="anchor" aria-label="anchor" href="#factor"><i class="fas fa-link"></i></a>
+</h2>
+<p>Un <code>factor</code> es un tipo de datos específico a R. Puede ser descrito como un <strong>dato numérico representado por una etiqueta</strong>.</p>
+<p>Supongamos que tenemos un conjunto de datos que representan el sexo de personas encuestadas por teléfono, pero estos se encuentran capturados con los números 1 y 2. El número 1 corresponde a <strong>femenino</strong> y el 2 a <strong>masculino</strong>.</p>
+<p>En R, se puede indicar que se nos muestre, en la consola y para otros análisis, los 1 como <code>femenino</code> y los 2 como <code>masculino</code>. Aunque para nuestra computadora, <code>femenino</code> tiene un valor de 1, pero a nosotros se nos muestra la palabra <code>femenino</code>. De esta manera reducimos el espacio de almacenamiento necesario para nuestros datos.</p>
+<p>Este comportamiento es similar a lo que ocurre con paquetes estadísticos comerciales como <em>SPSS Statistics</em>, en los que se puede asignar etiquetas a los datos, dependiendo de su valor. La diferencia se encuentra en que R trata a los factores de manera diferente a un dato numérico.</p>
+<p>Por último, cada una de las etiquetas o valores que puedes asumir un factor se conoce como <strong>nivel</strong> o <code><a href="https://rdrr.io/r/base/levels.html">levels()</a></code> en inglés. En nuestro ejemplo con <code>femenino</code> y <code>masculino</code>, tendríamos dos niveles.</p>
+</div>
+<div id="lógico" class="section level2" number="7.5">
+<h2>
+<span class="header-section-number">7.5</span> Lógico<a class="anchor" aria-label="anchor" href="#l%C3%B3gico"><i class="fas fa-link"></i></a>
+</h2>
+<p>Los <code>datos de tipo lógico</code> sólo tienen dos valores posibles: verdadero (<code>TRUE</code>) y falso (<code>FALSE</code>). Representan si una condición o estado se cumple, es verdadero, o no, es falso.</p>
+<p>Este tipo de dato es, generalmente, el resultado de operaciones relacionales y lógicas, son esenciales para trabajar con **álgebra Booleana*. También toman mucha relevancia cuando se estran trabajando con funciones más complejas en R.</p>
+<p>Como este tipo de dato sólo admite dos valores específicos, es el más restrictivo de R.</p>
+</div>
+<div id="na-y-null" class="section level2" number="7.6">
+<h2>
+<span class="header-section-number">7.6</span> <code>NA</code> y <code>NULL</code><a class="anchor" aria-label="anchor" href="#na-y-null"><i class="fas fa-link"></i></a>
+</h2>
+<p>En R, se usa <code>NA</code> para representar datos perdidos, mientras que <code>NULL</code> representa la ausencia de datos.</p>
+<p>La diferencia entre las dos es que un dato <code>NULL</code> aparece sólo cuando R intenta recuperar un dato y no encuentra nada, mientras que <code>NA</code> es usado para representar de modo explícito datos perdidos, omitidos o que por alguna razón son faltantes.</p>
+<p>Por ejemplo, si tratamos de recuperar la edad de una persona encuestada que no existe, obtendríamos un <code>NULL</code>, pues no hay ningún dato que corresponda con ello. En cambio, si tratamos de recuperar su estado civil, y la persona encuestada no contestó esta pregunta, obtendríamos un <code>NA</code>.</p>
+<p><code>NA</code> además puede aparecer como resultado de una operación realizada, pero no tuvo éxito en su ejecución.</p>
+
+<div class="rmdwarning">
+Dentro de la estadística los datos trabajar con datos <code>NULL</code> o <code>NA</code> son dos contexto completamente diferentes, en los que cada uno deben tener un tratamiento diferente.
+</div>
+</div>
+<div id="coerción" class="section level2" number="7.7">
+<h2>
+<span class="header-section-number">7.7</span> Coerción<a class="anchor" aria-label="anchor" href="#coerci%C3%B3n"><i class="fas fa-link"></i></a>
+</h2>
+<p>En R, los datos pueden ser coercionados, es decir, forzados, para transformarlos de un tipo a otro.</p>
+<p>La coerción es muy importante. Cuando pedimos a R ejecutar una operación, intentará coercionar de manera <strong>implícita</strong>, sin avisarnos, los datos de su tipo original al tipo correcto que la permita realizar. Habrá ocasiones en las que R tenga éxito y la operación ocurra sin problemas, y otras en las que falle y obtengamos un error.</p>
+
+<div class="rmdwarning">
+Siempre es importante verificar que los datos con los que se están trabajando estén correctamente transformados.
+</div>
+<p>Lo anterior ocurre porque no todos los tipos de datos pueden ser transformados a los demás, para ello se sigue una regla general.</p>
+<p><strong>La coerción de tipos se realiza de los tipos de datos más restrictivos a los más flexibles.</strong></p>
+<p>Las coerciones ocurren en el siguiente orden.</p>
+<p>lógico <span class="math inline">\(\Rightarrow\)</span> entero <span class="math inline">\(\Rightarrow\)</span> numérico <span class="math inline">\(\Rightarrow\)</span> cadena de texto` (logical <span class="math inline">\(\Rightarrow\)</span> integer <span class="math inline">\(\Rightarrow\)</span> numeric <span class="math inline">\(\Rightarrow\)</span> character)</p>
+<p>Las coerciones no pueden ocurrir en orden inverso. se puede coercionar un dato de tipo entero a uno numérico, pero uno de cadena de texto a numérico.</p>
+<p>Como los datos de tipo <code>lógico</code> sólo admiten dos valores (<code>TRUE</code> y <code>FALSE</code>), estos son los más restrictivos; mientras que los datos de<code>cadena de texto</code>, al admitir cualquier cantidad y combinación de caracteres, son los más flexibles.</p>
+<p>Los factores son un caso particular para la coerción. Dado que son valores numéricos con etiquetas, pueden ser coercionados a tipo numérico y cadena de texto; y los datos numéricos y cadena de texto pueden ser coercionados a factor. Sin embargo, al coercionar un factor tipo numérico, perdemos sus niveles.</p>
+<blockquote>
+<p>Las variables carácter pueden coaccionarse a ser factor, pero no de manera inversa. (No es tan sencillo hacerlo inverso).</p>
+</blockquote>
+<div id="coerción-explícita-con-la-familia-as" class="section level3" number="7.7.1">
+<h3>
+<span class="header-section-number">7.7.1</span> Coerción explícita con la familia <code>as()</code><a class="anchor" aria-label="anchor" href="#coerci%C3%B3n-expl%C3%ADcita-con-la-familia-as"><i class="fas fa-link"></i></a>
+</h3>
+<p>También se puede hacer coerciones <strong>explícitas</strong> usando la familia de funciones <code>as()</code>.</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th>Función</th>
+<th>Tipo al que hace coerción</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code><a href="https://rdrr.io/r/base/integer.html">as.integer()</a></code></td>
+<td>Entero</td>
+</tr>
+<tr class="even">
+<td><code><a href="https://rdrr.io/r/base/numeric.html">as.numeric()</a></code></td>
+<td>Numérico</td>
+</tr>
+<tr class="odd">
+<td><code><a href="https://rdrr.io/r/base/character.html">as.character()</a></code></td>
+<td>Cadena de texto</td>
+</tr>
+<tr class="even">
+<td><code><a href="https://rdrr.io/r/base/factor.html">as.factor()</a></code></td>
+<td>Factor</td>
+</tr>
+<tr class="odd">
+<td><code><a href="https://rdrr.io/r/base/logical.html">as.logical()</a></code></td>
+<td>Lógico</td>
+</tr>
+<tr class="even">
+<td><code><a href="https://rdrr.io/r/base/NULL.html">as.null()</a></code></td>
+<td><code>NULL</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Todas estas funciones aceptan como argumento datos o vectores. Cuando estas funciones tienen éxito en la coerción, nos devuelven datos del tipo pedido. Si fallan, obtenemos <code>NA</code> como resultado.</p>
+<p>Por ejemplo, intentemos convertir el número 5 a una cadena de texto. Para ello se usa la función <code><a href="https://rdrr.io/r/base/character.html">as.character()</a></code>.</p>
+<div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">## [1] "5"</span></span></code></pre></div>
+<p>Esta es una coerción válida, así que tenemos éxito. Pero, si se intenta convertir la palabra “cinco” a un dato numérico, se obtendrá una advertencia y <code>NA</code>.</p>
+<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="st">"cinco"</span><span class="op">)</span></span>
+<span><span class="co">## Warning: NAs introduced by coercion</span></span>
+<span><span class="co">## [1] NA</span></span></code></pre></div>
+<p>Comprobemos el comportamiento especial de los factores.</p>
+<p>Se puede coercionar al número 5 y la palabra “cinco” en un factor.</p>
+<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">## [1] 5</span></span>
+<span><span class="co">## Levels: 5</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="st">"cinco"</span><span class="op">)</span></span>
+<span><span class="co">## [1] cinco</span></span>
+<span><span class="co">## Levels: cinco</span></span></code></pre></div>
+<p>Se asigna la palabra “cinco” como factor al objeto <code>factor_cinco</code>.</p>
+<div class="sourceCode" id="cb144"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">factor_cinco</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="st">"cinco"</span><span class="op">)</span></span>
+<span><span class="co">#Resultado</span></span>
+<span><span class="va">factor_cinco</span></span>
+<span><span class="co">## [1] cinco</span></span>
+<span><span class="co">## Levels: cinco</span></span></code></pre></div>
+<p>Ahora se puede coercionar <code>factor_cinco</code> a cadena de texto y a numérico.</p>
+<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Cadena de texto</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">factor_cinco</span><span class="op">)</span></span>
+<span><span class="co">## [1] "cinco"</span></span>
+<span></span>
+<span><span class="co"># Numérico</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">factor_cinco</span><span class="op">)</span></span>
+<span><span class="co">## [1] 1</span></span></code></pre></div>
+<p>Si se coercciona un dato de tipo lógico a numérico, <code>TRUE</code> siempre devolverá 1 y <code>FALSE</code> dará como resultado 0.</p>
+<div class="sourceCode" id="cb146"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">## [1] 1</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">## [1] 0</span></span></code></pre></div>
+<p>Por último, la función <code><a href="https://rdrr.io/r/base/NULL.html">as.null()</a></code> siempre devuelve <code>NULL</code>, sin importar el tipo de dato que demos como argumento.</p>
+<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Lógico</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">as.null</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">## NULL</span></span>
+<span></span>
+<span><span class="co"># Numérico</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">as.null</a></span><span class="op">(</span><span class="fl">457</span><span class="op">)</span></span>
+<span><span class="co">## NULL</span></span>
+<span></span>
+<span><span class="co"># Cadena de texto</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">as.null</a></span><span class="op">(</span><span class="st">"palabra"</span><span class="op">)</span></span>
+<span><span class="co">## NULL</span></span></code></pre></div>
+</div>
+</div>
+<div id="verificar-el-tipo-de-un-dato" class="section level2" number="7.8">
+<h2>
+<span class="header-section-number">7.8</span> Verificar el tipo de un dato<a class="anchor" aria-label="anchor" href="#verificar-el-tipo-de-un-dato"><i class="fas fa-link"></i></a>
+</h2>
+<p>En ocasiones, tenemos datos pero no sabemos de simple vista qué tipo de datos son. Para esto casos, se puede usar la función <code><a href="https://rdrr.io/r/base/class.html">class()</a></code> para determinar el tipo de un dato. Esto es de utilidad para asegurarse que las operaciones que se desean realizar tendrán los datos apropiados para llevarse a cabo con éxito.</p>
+<p><code><a href="https://rdrr.io/r/base/class.html">class()</a></code> recibe como argumento un dato o vector y devuelve el nombre del tipo al que pertenece, en inglés.</p>
+<p>Por ejemplo, se verifica el tipo de datos que son 3, “3” y <code>TRUE</code>.</p>
+<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">## [1] "numeric"</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="st">"3"</span><span class="op">)</span></span>
+<span><span class="co">## [1] "character"</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">## [1] "logical"</span></span></code></pre></div>
+<div id="verificación-con-la-familia-de-funciones-is" class="section level3" number="7.8.1">
+<h3>
+<span class="header-section-number">7.8.1</span> Verificación con la familia de funciones <code>is()</code><a class="anchor" aria-label="anchor" href="#verificaci%C3%B3n-con-la-familia-de-funciones-is"><i class="fas fa-link"></i></a>
+</h3>
+<p>También se puede verificar si un dato es de un tipo específico con la familia de funciones <code>is()</code>.</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th>Función</th>
+<th>Tipo que verifican</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code><a href="https://rdrr.io/r/base/integer.html">is.integer()</a></code></td>
+<td>Entero</td>
+</tr>
+<tr class="even">
+<td><code><a href="https://rdrr.io/r/base/numeric.html">is.numeric()</a></code></td>
+<td>Numérico</td>
+</tr>
+<tr class="odd">
+<td><code><a href="https://rdrr.io/r/base/character.html">is.character()</a></code></td>
+<td>Cadena de texto</td>
+</tr>
+<tr class="even">
+<td><code><a href="https://rdrr.io/r/base/factor.html">is.factor()</a></code></td>
+<td>Factor</td>
+</tr>
+<tr class="odd">
+<td><code><a href="https://rdrr.io/r/base/logical.html">is.logical()</a></code></td>
+<td>Lógico</td>
+</tr>
+<tr class="even">
+<td><code><a href="https://rdrr.io/r/base/NA.html">is.na()</a></code></td>
+<td><code>NA</code></td>
+</tr>
+<tr class="odd">
+<td><code><a href="https://rdrr.io/r/base/NULL.html">is.null()</a></code></td>
+<td><code>NULL</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Estas funciones toman como argumento un dato, si este es del tipo que estamos verificando, nos devolverán <code>TRUE</code> y en caso contrario devolverán <code>FALSE</code>.</p>
+<p>Por ejemplo, se verifica que 5 sea numérico.</p>
+<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">## [1] TRUE</span></span></code></pre></div>
+<p>Se obtiene <code>TRUE</code>, pues es verdadero que es un dato numérico.</p>
+<p>De verifica que <code>5</code> sea de tipo cadena de texto.</p>
+<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/character.html">is.character</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">## [1] FALSE</span></span></code></pre></div>
+<p>El resultado es <code>FALSE</code>, por lo tanto este no es un dato de cadena de texto.</p>
+<p>Conociendo el tipo de datos con los que se está trabajando, nos aseguramos de que se obtendrá los resultados esperados para las operaciones que estemos realizando.</p>
+
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="coerci%C3%B3n-de-objetos.html"><span class="header-section-number">6</span> Coerción de objetos</a></div>
+<div class="next"><a href="funbasicas.html"><span class="header-section-number">8</span> Funciones básicas de R</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#tipos-de-datos"><span class="header-section-number">7</span> Tipos de datos</a></li>
+<li><a class="nav-link" href="#datos-m%C3%A1s-comunes"><span class="header-section-number">7.1</span> Datos más comunes</a></li>
+<li><a class="nav-link" href="#entero-y-num%C3%A9rico"><span class="header-section-number">7.2</span> Entero y numérico</a></li>
+<li><a class="nav-link" href="#cadena-de-texto"><span class="header-section-number">7.3</span> Cadena de texto</a></li>
+<li><a class="nav-link" href="#factor"><span class="header-section-number">7.4</span> Factor</a></li>
+<li><a class="nav-link" href="#l%C3%B3gico"><span class="header-section-number">7.5</span> Lógico</a></li>
+<li><a class="nav-link" href="#na-y-null"><span class="header-section-number">7.6</span> NA y NULL</a></li>
+<li>
+<a class="nav-link" href="#coerci%C3%B3n"><span class="header-section-number">7.7</span> Coerción</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#coerci%C3%B3n-expl%C3%ADcita-con-la-familia-as"><span class="header-section-number">7.7.1</span> Coerción explícita con la familia as()</a></li></ul>
+</li>
+<li>
+<a class="nav-link" href="#verificar-el-tipo-de-un-dato"><span class="header-section-number">7.8</span> Verificar el tipo de un dato</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#verificaci%C3%B3n-con-la-familia-de-funciones-is"><span class="header-section-number">7.8.1</span> Verificación con la familia de funciones is()</a></li></ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rstudio/bookdown-demo/blob/master/06-Cap6.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rstudio/bookdown-demo/edit/master/06-Cap6.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>R Tutorial Example</strong>" was written by CONAPO. It was last built on 2022-09-29.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

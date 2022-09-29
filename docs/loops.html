@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 9 Loops | R Tutorial Example</title>
+<meta name="author" content="CONAPO">
+<meta name="description" content="En R se disponen de varias instrucciones de control para facilitar los procedimientos que un usuario debe realizar. A continuación se explican esas instrucciones de control.  9.1 Instrucción if...">
+<meta name="generator" content="bookdown 0.29 with bs4_book()">
+<meta property="og:title" content="Chapter 9 Loops | R Tutorial Example">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://github.com/dvillasanao/R_Tutorial/loops.html">
+<meta property="og:description" content="En R se disponen de varias instrucciones de control para facilitar los procedimientos que un usuario debe realizar. A continuación se explican esas instrucciones de control.  9.1 Instrucción if...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 9 Loops | R Tutorial Example">
+<meta name="twitter:description" content="En R se disponen de varias instrucciones de control para facilitar los procedimientos que un usuario debe realizar. A continuación se explican esas instrucciones de control.  9.1 Instrucción if...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">R Tutorial Example</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Introducción</a></li>
+<li><a class="" href="rmarkdown-1.html"><span class="header-section-number">2</span> RMarkdown</a></li>
+<li><a class="" href="chunks.html"><span class="header-section-number">3</span> Chunks</a></li>
+<li><a class="" href="objetos.html"><span class="header-section-number">4</span> Tipos de variables</a></li>
+<li><a class="" href="propiedades-de-los-objetos.html"><span class="header-section-number">5</span> Propiedades de los objetos</a></li>
+<li><a class="" href="coerci%C3%B3n-de-objetos.html"><span class="header-section-number">6</span> Coerción de objetos</a></li>
+<li><a class="" href="tipos-de-datos.html"><span class="header-section-number">7</span> Tipos de datos</a></li>
+<li><a class="" href="funbasicas.html"><span class="header-section-number">8</span> Funciones básicas de R</a></li>
+<li><a class="active" href="loops.html"><span class="header-section-number">9</span> Loops</a></li>
+<li><a class="" href="apply-family.html"><span class="header-section-number">10</span> Apply family</a></li>
+<li><a class="" href="directorio-de-trabajo.html"><span class="header-section-number">11</span> Directorio de trabajo</a></li>
+<li><a class="" href="importar-y-exportar-datos.html"><span class="header-section-number">12</span> Importar y exportar datos</a></li>
+<li><a class="" href="dplyr-data-manipulation.html"><span class="header-section-number">13</span> Dplyr (Data Manipulation)</a></li>
+<li><a class="" href="ggplot.html"><span class="header-section-number">14</span> ggplot</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rstudio/bookdown-demo">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="loops" class="section level1" number="9">
+<h1>
+<span class="header-section-number">9</span> Loops<a class="anchor" aria-label="anchor" href="#loops"><i class="fas fa-link"></i></a>
+</h1>
+<p>En R se disponen de varias instrucciones de control para facilitar los procedimientos que un usuario debe realizar. A continuación se explican esas instrucciones de control.</p>
+<div id="instrucción-if" class="section level2" number="9.1">
+<h2>
+<span class="header-section-number">9.1</span> Instrucción <code>if</code><a class="anchor" aria-label="anchor" href="#instrucci%C3%B3n-if"><i class="fas fa-link"></i></a>
+</h2>
+<p>Esta instrucción sirve para realizar un conjunto de operaciones <strong>si</strong> se cumple cierta condición. A continuación se muestra la estructura básica de uso.</p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="loops.html#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (condicion) {</span>
+<span id="cb195-2"><a href="loops.html#cb195-2" aria-hidden="true" tabindex="-1"></a>  operación <span class="dv">1</span></span>
+<span id="cb195-3"><a href="loops.html#cb195-3" aria-hidden="true" tabindex="-1"></a>  operación <span class="dv">2</span></span>
+<span id="cb195-4"><a href="loops.html#cb195-4" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb195-5"><a href="loops.html#cb195-5" aria-hidden="true" tabindex="-1"></a>  operación final</span>
+<span id="cb195-6"><a href="loops.html#cb195-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div id="ejemplo-15" class="section level3 unnumbered">
+<h3>Ejemplo<a class="anchor" aria-label="anchor" href="#ejemplo-15"><i class="fas fa-link"></i></a>
+</h3>
+<p>Una secretaria recibe la información del salario básico semanal de un empleado y las horas trabajadas durante la semana por ese empleado. El salario básico es la remuneración por 40 horas de labor por semana, las horas extra son pagadas a ciencuenta mil pesos. Se escibe el procedimiento en R que debe usar la secretaria para calcular el salario semanal de un empleado que trabajó 45 horas y tiene salario básico de un millon de pesos.</p>
+<p>El código para calcular el salario final del empleado es el siguiente:</p>
+<div class="sourceCode" id="cb196"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sal</span> <span class="op">&lt;-</span> <span class="fl">1</span>  <span class="co"># Salario básico por semana</span></span>
+<span><span class="va">hlab</span> <span class="op">&lt;-</span> <span class="fl">45</span>   <span class="co"># Horas laboradas por semana</span></span>
+<span><span class="kw">if</span><span class="op">(</span><span class="va">hlab</span> <span class="op">&gt;</span> <span class="fl">40</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">hext</span> <span class="op">&lt;-</span> <span class="va">hlab</span> <span class="op">-</span> <span class="fl">40</span></span>
+<span>  <span class="va">salext</span> <span class="op">&lt;-</span> <span class="va">hext</span> <span class="op">*</span> <span class="fl">0.05</span></span>
+<span>  <span class="va">sal</span> <span class="op">&lt;-</span> <span class="va">sal</span> <span class="op">+</span> <span class="va">salext</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">sal</span>  <span class="co"># Salario semanal</span></span></code></pre></div>
+<pre><code>## [1] 1.25</code></pre>
+</div>
+</div>
+<div id="instrucción-if-else" class="section level2" number="9.2">
+<h2>
+<span class="header-section-number">9.2</span> Instrucción <code>if</code> <code>else</code><a class="anchor" aria-label="anchor" href="#instrucci%C3%B3n-if-else"><i class="fas fa-link"></i></a>
+</h2>
+<p>Esta instrucción sirve para realizar un conjunto de operaciones cuando <strong>NO</strong> se cumple cierta condición evaluada por un <code>if</code>. A continuación se muestra la estructura básica de uso.</p>
+<div class="sourceCode" id="cb198"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="va">condition</span><span class="op">)</span><span class="op">{</span><span class="va">true_action</span><span class="op">}</span></span>
+<span><span class="kw">if</span><span class="op">(</span><span class="va">condition</span><span class="op">)</span><span class="op">{</span><span class="va">true_action</span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span><span class="va">false_action</span><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="loops.html#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (condicion) {</span>
+<span id="cb199-2"><a href="loops.html#cb199-2" aria-hidden="true" tabindex="-1"></a>  operación <span class="dv">1</span></span>
+<span id="cb199-3"><a href="loops.html#cb199-3" aria-hidden="true" tabindex="-1"></a>  operación <span class="dv">2</span></span>
+<span id="cb199-4"><a href="loops.html#cb199-4" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb199-5"><a href="loops.html#cb199-5" aria-hidden="true" tabindex="-1"></a>  operación final</span>
+<span id="cb199-6"><a href="loops.html#cb199-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb199-7"><a href="loops.html#cb199-7" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> {</span>
+<span id="cb199-8"><a href="loops.html#cb199-8" aria-hidden="true" tabindex="-1"></a>  operación <span class="dv">1</span></span>
+<span id="cb199-9"><a href="loops.html#cb199-9" aria-hidden="true" tabindex="-1"></a>  operación <span class="dv">2</span></span>
+<span id="cb199-10"><a href="loops.html#cb199-10" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb199-11"><a href="loops.html#cb199-11" aria-hidden="true" tabindex="-1"></a>  operación final</span>
+<span id="cb199-12"><a href="loops.html#cb199-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="instrucción-ifelse" class="section level2" number="9.3">
+<h2>
+<span class="header-section-number">9.3</span> Instrucción <code>ifelse</code><a class="anchor" aria-label="anchor" href="#instrucci%C3%B3n-ifelse"><i class="fas fa-link"></i></a>
+</h2>
+<p>Se recomienda usar la instrucción <code>ifelse</code> cuando hay una sola instrucción para el caso <code>if</code> y para el caso <code>else</code>. A continuación se muestra la estructura básica de uso.</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="loops.html#cb200-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ifelse</span>(condición, operación SI cumple, operación NO cumple)</span></code></pre></div>
+<div id="ejemplo-16" class="section level3 unnumbered">
+<h3>Ejemplo<a class="anchor" aria-label="anchor" href="#ejemplo-16"><i class="fas fa-link"></i></a>
+</h3>
+<p>Se supone que recibe un vector de números enteros, Se escibe un procedimiento que diga si cada elemento del vector es par o impar.</p>
+<div class="sourceCode" id="cb201"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">8</span>, <span class="op">-</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">x</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html">%%</a></span> <span class="fl">2</span> <span class="op">==</span> <span class="fl">0</span>, <span class="st">'Es par'</span>, <span class="st">'Es impar'</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "Es impar" "Es impar" "Es par"   "Es par"   "Es par"   "Es impar"</code></pre>
+</div>
+</div>
+<div id="instrucción-for" class="section level2" number="9.4">
+<h2>
+<span class="header-section-number">9.4</span> Instrucción <code>for</code><a class="anchor" aria-label="anchor" href="#instrucci%C3%B3n-for"><i class="fas fa-link"></i></a>
+</h2>
+<p>La instrucción <code>for</code> es muy útil para repetir un procedimiento cierta cantidad de veces. A continuación se muestra la estructura básica de uso.</p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="loops.html#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> secuencia) {</span>
+<span id="cb203-2"><a href="loops.html#cb203-2" aria-hidden="true" tabindex="-1"></a>  operación <span class="dv">1</span></span>
+<span id="cb203-3"><a href="loops.html#cb203-3" aria-hidden="true" tabindex="-1"></a>  operación <span class="dv">2</span></span>
+<span id="cb203-4"><a href="loops.html#cb203-4" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb203-5"><a href="loops.html#cb203-5" aria-hidden="true" tabindex="-1"></a>  operación final</span>
+<span id="cb203-6"><a href="loops.html#cb203-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div id="ejemplo-17" class="section level3 unnumbered">
+<h3>Ejemplo<a class="anchor" aria-label="anchor" href="#ejemplo-17"><i class="fas fa-link"></i></a>
+</h3>
+<p>Se escibe un procedimiento para crear 10 muestras de tamaño 100 de una distribución uniforme entre uno y tres. Para cada una de las muestra, se debe contar el número de elementos de la muestra que fueron mayores o iguales a 2.5.</p>
+<div class="sourceCode" id="cb204"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">nrep</span> <span class="op">&lt;-</span> <span class="fl">10</span>  <span class="co"># Número de repeticiones</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">100</span>    <span class="co"># Tamaño de la muestra</span></span>
+<span><span class="va">conteo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="va">nrep</span><span class="op">)</span>  <span class="co"># Vector para almacenar el conteo</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">nrep</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span>n<span class="op">=</span><span class="va">n</span>, min<span class="op">=</span><span class="fl">1</span>, max<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
+<span>  <span class="va">conteo</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;=</span> <span class="fl">2.5</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">conteo</span>  <span class="co"># Para obtener el conteo</span></span>
+<span><span class="co">##  [1] 24 37 28 26 30 18 29 23 19 19</span></span></code></pre></div>
+<div class="sourceCode" id="cb205"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co">## [1] 1</span></span>
+<span><span class="co">## [1] 2</span></span>
+<span><span class="co">## [1] 3</span></span></code></pre></div>
+</div>
+</div>
+<div id="instrucción-while" class="section level2" number="9.5">
+<h2>
+<span class="header-section-number">9.5</span> Instrucción <code>while</code><a class="anchor" aria-label="anchor" href="#instrucci%C3%B3n-while"><i class="fas fa-link"></i></a>
+</h2>
+<p>La instrucción <code>while</code> es muy útil para repetir un procedimiento siempre que se cumple una condición. A continuación se muestra la estructura básica de uso.</p>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="loops.html#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (condición) {</span>
+<span id="cb206-2"><a href="loops.html#cb206-2" aria-hidden="true" tabindex="-1"></a>  operación <span class="dv">1</span></span>
+<span id="cb206-3"><a href="loops.html#cb206-3" aria-hidden="true" tabindex="-1"></a>  operación <span class="dv">2</span></span>
+<span id="cb206-4"><a href="loops.html#cb206-4" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb206-5"><a href="loops.html#cb206-5" aria-hidden="true" tabindex="-1"></a>  operación final</span>
+<span id="cb206-6"><a href="loops.html#cb206-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div id="ejemplo-18" class="section level3 unnumbered">
+<h3>Ejemplo<a class="anchor" aria-label="anchor" href="#ejemplo-18"><i class="fas fa-link"></i></a>
+</h3>
+<p>Suponga que se lanza una moneda en la cual el resultado es cara o sello. Escribir un procedimiento que simule lanzamientos hasta que el número de caras obtenidas sea 5. El procedimiento debe entregar el historial de lanzamientos.</p>
+<p>Para simular el lanzamiento de <strong>una</strong> moneda se puede usar la función <code>sample</code> y definiendo el vector <code>resultados</code> con <code>size = 1</code> para simular un lanzamiento, a continuación el código y tres pruebas ilustrativas.</p>
+<div class="sourceCode" id="cb207"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">resultados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Cara'</span>, <span class="st">'Sello'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">resultados</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>  <span class="co"># Prueba 1</span></span></code></pre></div>
+<pre><code>## [1] "Sello"</code></pre>
+<p>Una vez seamos capaces de simular un lanzamiento podemos escribir el procedimiento para generar tantos lanzamientos hasta que se cumpla la condición. El código mostrado abajo permite hacer lo solicitado.</p>
+<div class="sourceCode" id="cb209"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">num.lanza</span> <span class="op">&lt;-</span> <span class="fl">0</span>     <span class="co"># Contador de lanzamientos</span></span>
+<span><span class="va">num.caras</span> <span class="op">&lt;-</span> <span class="fl">0</span>     <span class="co"># Contados de caras obtenidas</span></span>
+<span><span class="va">historial</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>  <span class="co"># Vector vacío para almacenar</span></span>
+<span><span class="kw">while</span> <span class="op">(</span><span class="va">num.caras</span> <span class="op">&lt;</span> <span class="fl">5</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">resultados</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="va">num.lanza</span> <span class="op">&lt;-</span> <span class="va">num.lanza</span> <span class="op">+</span> <span class="fl">1</span></span>
+<span>  <span class="va">historial</span><span class="op">[</span><span class="va">num.lanza</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">res</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">res</span> <span class="op">==</span> <span class="st">'Cara'</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">num.caras</span> <span class="op">&lt;-</span> <span class="va">num.caras</span> <span class="op">+</span> <span class="fl">1</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">historial</span></span>
+<span><span class="co">##  [1] "Sello" "Sello" "Sello" "Sello" "Cara"  "Cara"  "Sello" "Sello" "Cara"  "Cara"  "Cara"</span></span>
+<span><span class="va">num.lanza</span></span>
+<span><span class="co">## [1] 11</span></span></code></pre></div>
+
+<div class="rmdnote">
+La instrucción <code>for</code> se usa cuando sabemos el número de veces que se debe repetir el procedimiento, mientras que la instrucción <code>while</code> se usa cuando debemos repetir un procedimiento cuando se cumpla una condición.
+</div>
+</div>
+</div>
+<div id="instrucción-repeat" class="section level2" number="9.6">
+<h2>
+<span class="header-section-number">9.6</span> Instrucción <code>repeat</code><a class="anchor" aria-label="anchor" href="#instrucci%C3%B3n-repeat"><i class="fas fa-link"></i></a>
+</h2>
+<p>La instrucción <code>while</code> es muy útil para repetir un procedimiento siempre que se cumple una condición. A continuación se muestra la estructura básica de uso.</p>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="loops.html#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="cf">repeat</span> {</span>
+<span id="cb210-2"><a href="loops.html#cb210-2" aria-hidden="true" tabindex="-1"></a>  operación <span class="dv">1</span></span>
+<span id="cb210-3"><a href="loops.html#cb210-3" aria-hidden="true" tabindex="-1"></a>  operación <span class="dv">2</span></span>
+<span id="cb210-4"><a href="loops.html#cb210-4" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb210-5"><a href="loops.html#cb210-5" aria-hidden="true" tabindex="-1"></a>  operación final</span>
+<span id="cb210-6"><a href="loops.html#cb210-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (condición) <span class="cf">break</span></span>
+<span id="cb210-7"><a href="loops.html#cb210-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div id="ejemplo-19" class="section level3 unnumbered">
+<h3>Ejemplo<a class="anchor" aria-label="anchor" href="#ejemplo-19"><i class="fas fa-link"></i></a>
+</h3>
+<p>Se hace un procedimiento para ir aumentando de uno en uno el valor de <code>x</code> hasta que <code>x</code> sea igual a siete El procedimiento debe imprimir por pantalla la secuencia de valores de <code>x</code>.</p>
+<div class="sourceCode" id="cb211"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">3</span>  <span class="co"># Valor de inicio</span></span>
+<span><span class="kw">repeat</span> <span class="op">{</span></span>
+<span>   <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>   <span class="va">x</span> <span class="op">&lt;-</span>  <span class="va">x</span> <span class="op">+</span> <span class="fl">1</span></span>
+<span>   <span class="kw">if</span> <span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="fl">8</span><span class="op">)</span> <span class="op">{</span></span>
+<span>     <span class="kw">break</span></span>
+<span>   <span class="op">}</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<pre><code>## [1] 3
+## [1] 4
+## [1] 5
+## [1] 6
+## [1] 7</code></pre>
+
+<div class="rmdtip">
+La instrucción <code><a href="https://rdrr.io/r/base/Control.html">break</a></code> sirve para salir de un procedimiento iterativo.
+</div>
+
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="funbasicas.html"><span class="header-section-number">8</span> Funciones básicas de R</a></div>
+<div class="next"><a href="apply-family.html"><span class="header-section-number">10</span> Apply family</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#loops"><span class="header-section-number">9</span> Loops</a></li>
+<li>
+<a class="nav-link" href="#instrucci%C3%B3n-if"><span class="header-section-number">9.1</span> Instrucción if</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#ejemplo-15">Ejemplo</a></li></ul>
+</li>
+<li><a class="nav-link" href="#instrucci%C3%B3n-if-else"><span class="header-section-number">9.2</span> Instrucción if else</a></li>
+<li>
+<a class="nav-link" href="#instrucci%C3%B3n-ifelse"><span class="header-section-number">9.3</span> Instrucción ifelse</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#ejemplo-16">Ejemplo</a></li></ul>
+</li>
+<li>
+<a class="nav-link" href="#instrucci%C3%B3n-for"><span class="header-section-number">9.4</span> Instrucción for</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#ejemplo-17">Ejemplo</a></li></ul>
+</li>
+<li>
+<a class="nav-link" href="#instrucci%C3%B3n-while"><span class="header-section-number">9.5</span> Instrucción while</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#ejemplo-18">Ejemplo</a></li></ul>
+</li>
+<li>
+<a class="nav-link" href="#instrucci%C3%B3n-repeat"><span class="header-section-number">9.6</span> Instrucción repeat</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#ejemplo-19">Ejemplo</a></li></ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rstudio/bookdown-demo/blob/master/09_Cap9.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rstudio/bookdown-demo/edit/master/09_Cap9.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>R Tutorial Example</strong>" was written by CONAPO. It was last built on 2022-09-29.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

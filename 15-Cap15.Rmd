@@ -1,0 +1,19 @@
+# References {-}
+
+
+## Librerías  
+
+**Librerías que se usaron en el trabajo**    
+
+```{r, echo = FALSE}
+require(ggplot2)
+names(sessionInfo()$otherPkgs)
+```
+
+
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName"> **Diana Villasana Ocampo**</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+
+
+Manual de R. (n.d.). Retrieved September 2022, from https://fhernanb.github.io/Manual-de-R/
+
+RMarkdown Referencia Guide (n.d.) Retrieved September 2022, https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf

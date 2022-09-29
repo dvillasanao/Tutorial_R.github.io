@@ -1,0 +1,451 @@
+# Importar y exportar datos   
+
+```{r, echo = FALSE}
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+```
+
+Hasta ahora, se han trabajado con datos ya existentes en R *base* o que se han generado por de manera autónoma, sin embargo, lo usual es que se usen datos almacenados en archivos fuera de R.     
+
+R puede importar datos de una amplia variedad de tipos de archivo con las funciones  *base* además de que esta capacidad es ampliada con el uso de paquetes específicos.    
+
+Cuando se importa un archivo, se están guardando su contenido en la sesión como un objeto. Dependiendo del procedimiento que se usen será el tipo de objeto creado.   
+
+De manera análoga, se pueden exportar los objetos de R a archivos dentro de la computadora.   
+
+## Descargando datos   
+
+Antes de empezar a importar datos, vale la pena señalar que  se pueden descargar archivos de internet usando R con la función `download.file()`.
+
+De esta manera se tendrpa acceso a una vasta diversidad de fuentes de datos. Entre otras, se podrán descargar los archivos.   
+
+
+La función `download.file()`  pide como argumento `url`, la dirección de internet del archivo que se quiere descargar y `destfile` el nombre que tendrá el archivo en la computadora. Ambos argumentos como cadenas de texto, es decir, entre comillas.    
+
+Por ejemplo, para descargar una copia del set *iris* disponible en el [*UCI Machine Learning Repository*](https://archive.ics.uci.edu) se usa la siguiente dirección como argumento `url`:
+
+* https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data
+
+Y se asigna "iris.data" al argumento `dest`. 
+
+```{r descarga iris, echo=TRUE, eval=FALSE}
+download.file(
+  url = "https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data", 
+  destfile = "Bases/iris.data"
+  )
+```
+
+El resultado es un archivo llamado "iris.data" en el directorio de trabajo y dentro de la carpeta "Bases".   
+
+Este método funciona con prácticamente todo tipo de archivos, aunque en algunos casos será necesario agregar el argumento `method = "wb"`, por asegurar que el archivo obtenido funcione correctamente.    
+
+## Tablas (datos rectangulares)  
+
+La estructura rectangular, en renglones y columnas, es común y conveniente para el análisis de datos. Se refiere a esta forma de organizar datos como **tabla**.  R cuenta con la función genérica `read.table()`, que puede leer cualquier tipo de archivo que contenga una tabla. 
+
+La condición para que R interprete un archivo como una tabla es que tenga renglones y en cada renglón, los datos estén separados por comas, o algún otro carácter, indicando columnas. Es decir, algo que luzca de la siguiente manera.
+
+>1, 20,  8, 5
+>1, 31,  6, 5
+>2, 18,  9, 5
+>2, 25, 10, 5
+
+Por supuesto, en lugar de comas se pueden tener puntos y coma, dos puntos, tabuladores o cualquier otro signo de puntuación como **separador** de columnas.   
+
+La función `read.table()` acepta un número considerable de argumentos. Los más importantes son los siguientes.  
+
+* `file`: La ruta del archivo que se importa, como cadena de texto. Si el archivo se encuentra en el [directorio de trabajo], es suficiente dar el nombre del archivo, sin la ruta completa.       
+* `header`: Si el archivo tiene encabezados, para ser interpretados como nombres de columna, se define este argumento como `TRUE`.
+* `sep`: El carácter que es usado como separador de columnas. Por defecto es ";".
+* `col.names`: Un vector opcional, de tipo carácter, con los nombres de las columnas en la tabla.  
+* `stringsAsFactors`: Esta función convierte automáticamente los datos de texto a factores. Si este no es el comportamiento que se desea, se define este argumento como `FALSE`. 
+
+Se pueden consultar todos los argumentos de esta función ejecutando `?read.table` en la consola.
+
+Es importante señalar que el objeto obtenido al usar esta función es siempre un **data frame**.    
+
+Ejemplo, con un archivo con extensión ".data", descargado desde el repositorio de [Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Diagnostic)).   
+
+```{r descarga cancer.data, echo=TRUE, eval=FALSE}
+download.file(
+  url = "https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/breast-cancer-wisconsin.data", 
+  dest = "Bases/breast-cancer-wis.data"
+)
+```
+
+Estos datos pertenecen a una base de diagnósticos de cáncer mamario de la Universidad de Wisconsin, usado para probar métodos de aprendizaje automático. Se puede encontrar la información completa sobre este conjunto de datos en el siguiente enlace:
+
+* https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+%28Diagnostic%29
+Se usa sin especificar ningún otro argumento.
+
+```{r, echo=TRUE}
+bcancer <- read.table(file = "Bases/breast-cancer-wis.data")
+```
+
+Veamos los primeros renglones de la base de datos usando la función `head()`  
+
+```{r, collapse = TRUE}
+head(bcancer)
+```
+
+Los datos no lucen particularmente bien. Se necesitan ajustar algunos parámetros al importarlos.    
+
+No hay datos de encabezado, por lo que `header` será igual a `FALSE` y  el separador de columnas es una coma, así que el valor de `sep` será ",". No se conoce cuál es el nombre de las columnas, así que por el momento no se proporcionan uno.
+
+```{r, collapse = TRUE}
+bcancer <- read.table(file = "Bases/breast-cancer-wis.data", header = FALSE, sep = ",")
+# Resultado
+head(bcancer)
+```
+
+Los nombres de las columnas son poco descriptivos. Si no damos nombres de variables, cada columna tendrá como nombre "V" seguida de números del 1 adelante.
+
+Para este ejemplo, se cuenta con un archivo de información, que describe el contenido de los datos que se han importado.
+
+* https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/breast-cancer-wisconsin.names
+
+Si descargas este archivo, se puede abrirlo usando el bloc o navegador de internet de la computadora.
+
+Se guargan en un vector las abreviaturas de los nombres de columna descritos en el documento anterior.
+
+```{r, echo=TRUE}
+nombres <- c("id", "clump_t", "u_csize", "u_cshape", "m_adh", "spcs", "b_nuc", 
+             "b_chr", "n_nuc", "mit", "class")
+```
+
+Ahora se usa este vector como argumento `col.names` en `read.table()`, para importar els datos con nombres de columna.  
+
+```{r,collapse = TRUE}
+bcancer <- read.table(file = "Bases/breast-cancer-wis.data", header = FALSE, sep = ",",
+                       col.names = nombres)
+# Resultado
+head(bcancer)
+```
+
+La base de datos ha sido importada correctamente. Además, el objeto resultante es un data frame. 
+
+
+```{r,collapse = TRUE}
+class(bcancer)
+
+str(bcancer)
+```
+
+### Archivos CSV
+
+Un caso particular de las tablas, son los archivos separados por comas, con extensión **.csv**, por *Comma Separated Values*, sus siglas en inglés. Este es un tipo de archivo comúnmente son usados para compartir datos, pues es compatible con una amplia variedad de sistemas diferentes además de que ocupa relativamente poco espacio de almacenamiento.  
+
+Este tipo de archivos también se pueden importar usando la función `read.table()`.
+
+Se prueba descargando los mismos datos que en el ejemplo anterior, pero almacenados en un archivo con extensión **.csv**.   
+
+```{r, echo=TRUE, eval=FALSE}
+download.file(
+  url = "https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/breast-cancer-wisconsin.data", 
+  dest = "Bases/breast-cancer-wis.csv"
+)
+```
+
+Se puede usar `read.table()` con los mismos argumentos que en el ejemplo anterior, con la excepción de que este archivo sí tiene encabezados de columna, por lo que cambiamos `header` de `FALSE` a `TRUE`.  
+
+```{r, collapse = TRUE}
+bcancer <- read.table(file = "Bases/breast-cancer-wis.csv", header = TRUE, sep = ",",
+                      col.names = nombres)
+# Resultado
+head(bcancer)
+```
+
+Una ventaja de usar documentos con extensión **.csv** es la posibilidad de usar la función `read.csv()`. Esta es una es una versión de `read.table()`, optimizada para importar archivos **.csv**.   
+
+`read.csv()` acepta los mismos argumentos que `read.table()`, pero al usarla con un archivo **.csv**, en casi todo los casos, no hará falta especificar nada salvo la ruta del archivo. 
+
+```{r, collapse = TRUE}
+bcancer <- read.csv("Bases/breast-cancer-wis.csv")
+# Resultado
+head(bcancer)
+```
+
+`read.csv()` también devuelve un data frame como resultado. 
+
+## Archivos con una estructura desconocida   
+
+Habrá ocasiones en las que no se están seguros del contenido de los archivos que se desea importar. En estos casos, se puede pedirle a R que intente abrir el archivo en cuestión, usando la función `file.show()`.
+
+Por ejemplo, abrir el archivo con extensión **.csv** que se importo con anterioridad.   
+
+```{r, eval=FALSE}
+file.show("Bases/breast-cancer-wis.csv")
+```
+
+R intentará usar el programa que en el equipo, por defecto, abre el tipo de archivo que se le ha indicado. Si no tenemos un programa configurado para abrir el tipo de archivo que se desea, el sistema operativo nos pedirá que elijamos uno.    
+
+Lo anterior puede ocurrir si se intenta abrir el archivo con extensión **.data** que se han importado en este capítulo. 
+
+```{r, eval=FALSE}
+file.show("Bases/breast-cancer-wis.data")
+```
+
+Se puede usar la función `readLines()` para leer un archivo línea por línea. Se establece el argumento `n = 4` para obtener sólo los primeros cuatro renglones del documento.   
+
+```{r, echo = TRUE}
+readLines("Bases/breast-cancer-wis.data", n = 4)
+```
+
+La salida es una lista de vectores, uno por linea en el archivo.    
+
+Observando la salida de `readLines()` se puede determinar si el archivo de nuestro interés puede ser importado usando algunos de los métodos que se han revisado o se necesitarán de herramientas diferentes.      
+
+El documento "R Data Import/Export" (R Core Team, 2018) contiene una guía avanzada sobre el proceso de importar y exportar todo tipo de datos. Puedes consultarlo en el siguiente enlace:
+
+* https://cran.r-project.org/doc/manuals/r-release/R-data.pdf
+
+## Exportar datos  
+
+Un paso muy importante en el trabajo con R es exportar los datos que se han generado, ya sea para que sean usados por otras personas o para almacenar información en el disco duro en lugar de el RAM.   
+
+Dependiendo del tipo de estructura de dato en el que se encuentran contenidos la base datos son las opciones que tenemos para exportarlos.  
+
+### Data frames y matrices   
+
+Si los datos se encuentran contenidos en una estructura de datos rectangular, se pueden exportarlos con diferentes funciones.    
+
+De manera análoga a `read.table()`, la función `write.table()` permite exportar matrices o data frames, como archivos de texto con distintas extensiones.   
+
+Los argumentos más usados de `write.table()` son los siguientes.     
+
+* `x`:  El nombre del data frame o matriz a exportar.   
+* `file`: El nombre, extensión y ruta del archivo creado con esta función. Si sólo se escribe el nombre del archivo, este será creado en el directorio de trabajo.    
+* `sep`: El carácter que se usará como separador de columnas.   
+* `row.names`: Si se desea incluir el nombre de los renglones en el objeto al exportarlo, se establece este argumento como `TRUE`. En general, es recomendable fijarlo como `FALSE`, para conservar una estructura tabular más fácil de leer.     
+* `col.names`: Si  se desea que el archivo incluya los nombres de las columnas en el objeto, se establece este argumento como `TRUE`. Es recomendable fijarlo como `TRUE` para evitar la necesidad de almacenar los nombres de columna en documentos distintos.    
+
+Se pueden consultar todos los argumentos de esta función ejecutando `?write.table`.
+
+Se prueba exportando el objeto `iris` a un documento de texto llamado **iris.txt** a el directorio de trabajo, usando como separador la coma, con nombres de columnas y sin nombre de renglones.   
+
+```{r, eval = FALSE}
+write.table(x = iris, file = "Bases/iris.txt", sep = ",", 
+            row.names = FALSE, col.names = TRUE)
+```
+
+Se importa el archivo que se han creado usando `read.table()`.   
+
+```{r}
+iris_txt <- read.table(file = "Bases/iris.txt", header = TRUE, sep = ",")
+# Resultado
+head(iris_txt)
+```
+
+También se pueden exportar datos a archivos con extensión **.csv** con la función `write.csv()`. 
+
+Se desea exportar `iris` como un documento **.csv**. En este caso, sólo se especifica que no se desean guardar los nombres de los renglones con `row.names = FALSE`.  
+
+```{r, echo=TRUE, eval = FALSE}
+write.csv(x = iris, file = "Bases/iris.csv", row.names = FALSE) 
+```
+
+Se importa el archivo creado.
+
+```{r, echo=TRUE}
+iris_csv <- read.csv("Bases/iris.csv")
+# Resultado
+head(iris_csv)
+```
+
+### Listas
+
+La manera más sencilla de exportar listas es guardarlas en archivos RDS. Este es un tipo de archivo nativo de R se puede almacenar cualquier objeto a un archivo en el disco duro.   
+
+Además, RDS comprime los datos que almacena, por lo que ocupa menos espacio en disco duro que otros tipos de archivos, aunque contengan la misma información.
+
+Para exportar un objeto a un archivo RDS, se usa la función `saveRDS()` que siempre pide dos argumentos:
+
+* `object`: El nombre del objeto a exportar.
+* `file`: El nombre y ruta del archivo que se crearan. Los archivos deben tener la extensión **.rds**. Si no se especifica una ruta completa, el archivo será creado en el directorio de trabajo.   
+
+Se crea una lista de ejemplo que contiene dos vectores y dos matrices  
+
+```{r, collapse = TRUE}
+mi_lista <- list("a" = c(TRUE, FALSE, TRUE),
+                 "b" = c("a", "b", "c"),
+                 "c" = matrix(1:4, ncol = 2),
+                 "d" = matrix(1:6, ncol = 3))
+# Resultado
+mi_lista
+```
+
+Aunque se pueden intentar `write.table()` para exportar listas, por lo general se obtiene un error como resultado.
+
+Se trata de exportar la lista anterior como un archivo **.txt**.  
+```{r, error=TRUE, collapse = TRUE}
+write.table(x = mi_lista, file = "Bases/mi_lista.txt")
+```
+
+Se usa la función `saveRDS()` para exportar al archivo **mi_lista.rds**.  
+
+```{r, echo = TRUE, eval = FALSE}
+saveRDS(object = mi_lista, file = "Bases/mi_lista.rds")
+```
+
+Si se desea importar un archivo RDS a R, se usa la función `readRDS()`, indicando la ruta en la que se encuentra el archivo que se desea.
+
+Se intenta importar el archivo **mi_lista.rds**.
+
+```{r importar rds, echo=TRUE}
+mi_lista_importado <- readRDS(file = "Bases/mi_lista.rds")
+```
+
+El resultado de la importación: 
+
+```{r, collapse = TRUE}
+mi_lista_importado
+# El resultado es una lista, al igual que el objeto original
+class(mi_lista)
+```
+
+Los objetos importados usando un archivo `RDS` conservan los tipos y clases que tenían originalmente, lo cual previene pérdida de información.   
+
+## Hojas de cálculo de Excel
+
+Un formato usado con mucha frecuencia para almacenar archivos son las hojas de cálculo, en particular las generadas por el paquete [*Microsoft Excel*](https://products.office.com/es-mx/excel).
+
+R *base* no tiene una función para importar archivos almacenados en archivos con extensión **.xsl** y **.xslx**, creados con *Excel*.
+
+Para importar datos desde este tipo de archivos, se necesitan instalar el paquete **readxl**, que contiene funciones específicas para realizar esta tarea.
+
+Ae usa la función `installpackages()`, en caso de que no se tenga. 
+
+```{r, eval=FALSE}
+install.packages("readxl")
+```
+
+Ya instalado, se manda a llamar el paquete `readxl` a la sesión de trabajo.  
+
+```{r}
+library(readxl)
+```
+
+Se usaran, principalmente dos funciones de este paquete.   
+
+* `read_excel()`: Para importar archivos **.xls** y **xlsx**.   
+* `excel_sheets()`: Para obtener los nombres de las pestañas en una hoja de cálculo de *Excel*.  
+
+
+Para probar estas funciones, se descarga una hoja de cálculo de prueba. Nota que se han establecido el argumento `mode = "wb"` para asegurar que el archivo se descargue correctamente.
+
+```{r, eval=FALSE}
+download.file(
+  url = "https://github.com/jboscomendoza/r-principiantes-bookdown/raw/master/datos/data_frames.xlsx", 
+  destfile = "Bases/data_frames.xlsx", 
+  mode = "wb"
+) 
+```
+
+Si se necesita leer las primeras cinco líneas de **data_frames.xlsx**, se confrima que este es un archivo que no tiene forma rectangular, de tabla. 
+
+```{r}
+readLines("Bases/data_frames.xlsx", n = 5)
+```
+
+En caso de que se tenga instalado *Excel* o algún otro programa compatible con archivos de hoja de cálculo, como *LibreOffice Calc* o *Number*, se pueden pedir a R que abra este archivo con `file.show()`. De este modo se pueden explorar su contenido.  
+ 
+```{r, eval=FALSE}
+file.show("Bases/data_frames.xlsx")
+```
+
+La función `excel_sheets()` devuelve el nombre de las pestañas como un vector.  
+
+```{r}
+excel_sheets("Bases/data_frames.xlsx")
+```
+
+Este archivo tiene dos pestañas, llamadas **iris** y **trees**. 
+
+Se intentará importar la pestaña **iris** con `read_excel()`. Esta función tiene los siguientes argumentos principales. 
+
+* `path`: La ruta del archivo a importar. Si no se especifica una ruta completa, será buscado en el directorio de trabajo.
+* `sheet`: El nombre de la pestaña a importar. Si no se especifica este argumento, `read_excel()` intentará leer la primera pestaña de la hoja de cálculo.     
+* `range`: Cadena de texto con el rango de celdas a importar, escrito con el formato usado en *Excel*. Por ejemplo, "A1:B:10".   
+* `col_names`: Con este argumento se indica si la pestaña que se va a importar tiene encabezados para usar como nombres de columna. Por defecto su valor es `TRUE`. Si no tenemos encabezados, se pueden dar un vector con nombres para asignar a las columnas.   
+
+Se puede consultar todos los argumentos de esta función ejecutando `?read_excel`.   
+
+Se utiliza la función `read_excel()`, como ejemplo:   
+
+```{r}
+iris_excel <- read_excel(path = "Bases/data_frames.xlsx", sheet = "iris")
+```
+
+El resultado es un data frame.  
+
+```{r}
+head(iris_excel)
+```
+
+Si los datos en la hoja de cálculo tienen forma de tabla, `read_excel()` no se tendrá problemas para importarlos. Cuando este no es el caso, se usa el argumento `range` para extraer sólo la información que interesa.
+ 
+
+Se intenta importar la pestaña **trees**.  
+
+```{r}
+trees_excel <- read_excel(path = "Bases/data_frames.xlsx", sheet = "trees")
+# Resultado
+trees_excel
+```
+
+Los resultados no lucen correctamente porque los datos en la pestaña no tienen forma de tabla.    
+
+Se ajustan los argumentos de `read_excel()` para leer correctamente la información de la pestaña. Al explorar manualmente el archivo **data.frames.xlsx**, se pueden localizar el rango en el que se encuentran los datos (de las celdas B3 a D33) y los nombres de las columnas (Girth, Height y Volume).   
+
+
+Se prueba importar de nuevo con esta información.   
+
+```{r}
+trees_excel <- read_excel(path = "Bases/data_frames.xlsx", sheet = "trees", 
+                          range = "B3:D33", 
+                          col_names = c("Girth", "Height", "Volume"))
+# Resultado
+trees_excel
+```
+
+Esta vez se han tenido éxito y los datos importados son los correctos. 
+
+El paquete **readxl** tiene más funciones para trabajar con hojas de cálculo además de `read_excel()` y `excel_sheets()`.Se puede conocer más sobre ellas en la documentación de `readxl`, llamando `help(package = "readxl")`.
+
+## Datos de paquetes estadísticos comerciales (`SPSS`, `SAS` y `STATA`)    
+
+En ciertas disciplinas, el uso de determinados paquetes estadísticos comerciales es sumamente común. Si por ejemplo, en Psicología el paquete [*SPSS Statistics*](https://www.ibm.com/products/spss-statistics) de IBM es el paquete estadístico comercial más usado. Si se es psicólogo o psicóloga, es altamente probable encontrar datos contenidos en archivos con extensión **.sav**, el tipo de archivo nativo de **SPSS Statistics**.     
+
+Por lo tanto, es conveniente importar y exportar datos almacenados en archivos compatibles con paquetes estadísticos comerciales, pues esto nos permitirá  usar datos ya existentes compatibles con ellos y colaborar con otras personas.    
+
+Para este fin, se usa el paquete `haven`.     
+
+```{r, eval=FALSE}
+install.packages("haven")
+```
+
+Para usar las funciones de **haven**, se caraga a la sesión de trabajo.
+
+```{r}
+library(haven)
+```
+
+Las siguientes funciones de del paquete `haven` son usadas para importar datos. Todas estas funciones piden como argumento `file` la ruta y nombre del archivo a importar, si no se especifica ruta, será buscado en el directorio de trabajo.       
+
+* `read_spss()`: *SPSS Statistics*, archivos con extensión **sav**, **zsav** y **por**.
+* `read_sav()`: *SPSS Statistics*, sólo archivos **sav**, **zsav**.
+* `read_sas()`: *SAS*, archivos **sas7bdat**.
+* `read_xpt`: *SAS*, archivos **xpt**.
+* `read_stata()`: *Stata*, archivos **dta**.
+
+Todas importan los datos como un data frame.      
+
+También se pueden exportar los data frames creados en R como archivos compatibles con estos programas con las siguientes funciones. Todas piden el argumento `file`, con la ruta y nombre del archivo a crear. Es muy importante que poner como nombre de archivo uno con la extensión correcta para cada paquete.      
+
+* `write_sav()`: *SPSS Statistics*, archivos **sav**, **zsav** o **por**.
+* `write_sas()`: *SAS*, archivos **sas7bda**.
+* `write_xpt()`: *SAS*, archivos **xpt**.
+* `write_dta()`: *Stata*, archivos **dta**.
+
+Como siempre, se pueden leer sobre las demás funciones en el paquete **haven** en su documentación, llamando `help(package = "haven")`.   
+
+
